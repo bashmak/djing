@@ -30,11 +30,11 @@
                 {% if task.is_relevant %}
                     <tr class="text-muted">
                 {% else %}
-                    {% if task.priority == 'E' %}
+                    {% if task.priority == 0 %}
                         <tr class="success">
-                    {% elif task.priority == 'C' %}
+                    {% elif task.priority == 1 %}
                         <tr>
-                    {% elif task.priority == 'A' %}
+                    {% elif task.priority == 2 %}
                         <tr class="danger">
                     {% else %}
                         <tr>

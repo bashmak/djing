@@ -13,6 +13,9 @@ from django.shortcuts import resolve_url
 from group_app.models import Group
 
 
+# Maked compatible
+
+
 class MyUserManager(BaseUserManager):
     def create_user(self, telephone, username, password=None):
         """
@@ -96,16 +99,17 @@ class UserProfileLog(models.Model):
     account = models.ForeignKey('UserProfile', on_delete=models.CASCADE, verbose_name=_('Author'))
     meta_info = JSONField(verbose_name=_('Meta information'))
     ACTION_TYPES = (
-        ('cusr', _('Create user')),
-        ('dusr', _('Delete user')),
-        ('cdev', _('Create device')),
-        ('ddev', _('Delete device')),
-        ('cnas', _('Create NAS')),
-        ('dnas', _('Delete NAS')),
-        ('csrv', _('Create service')),
-        ('dsrv', _('Delete service'))
+        (0, _('Undefined')),
+        (1, _('Create user')),
+        (2, _('Delete user')),
+        (3, _('Create device')),
+        (4, _('Delete device')),
+        (5, _('Create NAS')),
+        (6, _('Delete NAS')),
+        (7, _('Create service')),
+        (8, _('Delete service'))
     )
-    do_type = models.CharField(_('Action type'), max_length=4, choices=ACTION_TYPES)
+    do_type = models.PositiveSmallIntegerField(_('Action type'), default=0, choices=ACTION_TYPES)
     additional_text = models.CharField(_('Additional info'), blank=True, null=True, max_length=512)
     action_date = models.DateTimeField(_('Action date'), auto_now_add=True)
 
@@ -113,6 +117,7 @@ class UserProfileLog(models.Model):
         return self.get_do_type_display()
 
     class Meta:
+        db_table = 'profiles_userprofilelog'
         ordering = '-action_date',
         verbose_name = _('User profile log')
         verbose_name_plural = _('User profile logs')
@@ -146,6 +151,7 @@ class UserProfile(BaseAccount):
         return self.get_big_ava()
 
     class Meta:
+        db_table = 'profiles_userprofile'
         verbose_name = _('Staff account profile')
         verbose_name_plural = _('Staff account profiles')
         ordering = 'fio',

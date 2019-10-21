@@ -18,6 +18,9 @@ from gw_app.nas_managers import SubnetQueue, NasFailedResult, NasNetworkError
 from tariff_app.models import Tariff, PeriodicPay
 
 
+# Maked compatible
+
+
 class AbonLog(models.Model):
     abon = models.ForeignKey('Abon', on_delete=models.CASCADE)
     amount = models.FloatField(default=0.0)
@@ -40,7 +43,8 @@ class AbonTariff(models.Model):
     tariff = models.ForeignKey(
         Tariff,
         on_delete=models.CASCADE,
-        related_name='linkto_tariff'
+        related_name='linkto_tariff',
+        db_column='tariff_id'
     )
 
     time_start = models.DateTimeField(null=True, blank=True, default=None)
@@ -58,7 +62,7 @@ class AbonTariff(models.Model):
         )
 
     class Meta:
-        db_table = 'abonent_tariff'
+        db_table = 'customer_service'
         permissions = (
             ('can_complete_service', _('finish service perm')),
         )
@@ -75,7 +79,7 @@ class AbonStreet(models.Model):
         return self.name
 
     class Meta:
-        db_table = 'abon_street'
+        db_table = 'customer_street'
         verbose_name = _('Street')
         verbose_name_plural = _('Streets')
         ordering = 'name',
@@ -90,9 +94,9 @@ class AbonManager(MyUserManager):
         if not isinstance(group_ids, tuple):
             group_ids = tuple(group_ids)
         return self.raw(
-            'SELECT baseaccount_ptr_id, ip_address FROM abonent '
-            'WHERE group_id IN %s AND nas_id=%s AND ip_address IS NOT NULL '
-            'ORDER BY inet_aton(ip_address) ASC',
+            'SELECT baseaccount_ptr_id, ip_address FROM customers '
+            'WHERE group_id IN %s AND gateway_id=%s AND ip_address IS NOT NULL '
+            'ORDER BY ip_address ASC',
             params=(group_ids, str(nas_id))
         )
 
@@ -103,7 +107,8 @@ class Abon(BaseAccount):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        default=None
+        default=None,
+        db_column='current_service_id'
     )
     group = models.ForeignKey(
         Group,
@@ -111,7 +116,7 @@ class Abon(BaseAccount):
         blank=True, null=True,
         verbose_name=_('User group')
     )
-    ballance = models.FloatField(default=0.0)
+    ballance = models.FloatField(default=0.0, db_column='balance')
     ip_address = models.GenericIPAddressField(
         verbose_name=_('Ip address'),
         null=True,
@@ -157,15 +162,18 @@ class Abon(BaseAccount):
         blank=True,
         on_delete=models.SET_NULL,
         verbose_name=_('Network access server'),
-        default=None
+        default=None,
+        db_column='gateway_id'
     )
     autoconnect_service = models.BooleanField(
         _('Automatically connect next service'),
-        default=False
+        default=False,
+        db_column='auto_renewal_service'
     )
     last_connected_tariff = models.ForeignKey(
         Tariff, verbose_name=_('Last connected service'),
-        on_delete=models.SET_NULL, null=True, blank=True, default=None
+        on_delete=models.SET_NULL, null=True, blank=True, default=None,
+        db_column='last_connected_service_id'
     )
 
     MARKER_FLAGS = (
@@ -194,7 +202,7 @@ class Abon(BaseAccount):
     objects = AbonManager()
 
     class Meta:
-        db_table = 'abonent'
+        db_table = 'customers'
         permissions = (
             ('can_buy_tariff', _('Buy service perm')),
             ('can_add_ballance', _('fill account')),
@@ -400,7 +408,8 @@ class PassportInfo(models.Model):
         Abon,
         on_delete=models.CASCADE,
         blank=True,
-        null=True
+        null=True,
+        db_column='customer_id'
     )
 
     class Meta:
@@ -414,9 +423,9 @@ class PassportInfo(models.Model):
 
 
 class InvoiceForPayment(models.Model):
-    abon = models.ForeignKey(Abon, on_delete=models.CASCADE)
+    abon = models.ForeignKey(Abon, on_delete=models.CASCADE, db_column='customer_id')
     status = models.BooleanField(default=False)
-    amount = models.FloatField(default=0.0)
+    amount = models.FloatField(default=0.0, db_column='cost')
     comment = models.CharField(max_length=128)
     date_create = models.DateTimeField(auto_now_add=True)
     date_pay = models.DateTimeField(blank=True, null=True)
@@ -443,7 +452,7 @@ class InvoiceForPayment(models.Model):
 
 
 class AbonRawPassword(models.Model):
-    account = models.OneToOneField(Abon, models.CASCADE, primary_key=True)
+    account = models.OneToOneField(Abon, models.CASCADE, primary_key=True, db_column='customer_id')
     # TODO: make password to EncryptedCharField
     passw_text = models.CharField(max_length=64)
 
@@ -451,14 +460,15 @@ class AbonRawPassword(models.Model):
         return "%s - %s" % (self.account, self.passw_text)
 
     class Meta:
-        db_table = 'abon_raw_password'
+        db_table = 'customer_raw_password'
 
 
 class AdditionalTelephone(models.Model):
     abon = models.ForeignKey(
         Abon,
         on_delete=models.CASCADE,
-        related_name='additional_telephones'
+        related_name='additional_telephones',
+        db_column='customer_id'
     )
     telephone = models.CharField(
         max_length=16,

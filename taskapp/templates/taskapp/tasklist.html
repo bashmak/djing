@@ -29,9 +29,9 @@
 
                         {# Task state #}
                         {% if not task.is_relevant %}
-                            {% if task.priority == 'E' %}
+                            {% if task.priority == 0 %}
                                 <span class="glyphicon glyphicon-ok-circle text-success"></span>
-                            {% elif task.priority == 'A' %}
+                            {% elif task.priority == 2 %}
                                 <span class="glyphicon glyphicon-exclamation-sign text-danger"></span>
                             {% endif %}
                         {% endif %}

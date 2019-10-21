@@ -8,45 +8,71 @@ from django.utils.translation import gettext_lazy as _
 from abonapp.models import Abon
 from .handle import handle as task_handle
 
+# Maked compatible
+
 TASK_PRIORITIES = (
-    ('A', _('Higher')),
-    ('C', _('Average')),
-    ('E', _('Low'))
+    # ('A', _('Higher')),
+    # ('C', _('Average')),
+    # ('E', _('Low'))
+    (2, _('Higher')),
+    (1, _('Average')),
+    (0, _('Low')),
 )
 
 TASK_STATES = (
-    ('S', _('New')),
-    ('C', _('Confused')),
-    ('F', _('Completed'))
+    # ('S', _('New')),
+    # ('C', _('Confused')),
+    # ('F', _('Completed'))
+    (0, _('New')),
+    (1, _('Confused')),
+    (2, _('Completed'))
 )
 
 TASK_TYPES = (
-    ('na', _('not chosen')),
-    ('ic', _('ip conflict')),
-    ('yt', _('yellow triangle')),
-    ('rc', _('red cross')),
-    ('ls', _('weak speed')),
-    ('cf', _('cable break')),
-    ('cn', _('connection')),
-    ('pf', _('periodic disappearance')),
-    ('cr', _('router setup')),
-    ('co', _('configure onu')),
-    ('fc', _('crimp cable')),
-    ('ni', _('Internet crash')),
-    ('ot', _('other'))
+    # ('na', _('not chosen')),
+    # ('ic', _('ip conflict')),
+    # ('yt', _('yellow triangle')),
+    # ('rc', _('red cross')),
+    # ('ls', _('weak speed')),
+    # ('cf', _('cable break')),
+    # ('cn', _('connection')),
+    # ('pf', _('periodic disappearance')),
+    # ('cr', _('router setup')),
+    # ('co', _('configure onu')),
+    # ('fc', _('crimp cable')),
+    # ('ni', _('Internet crash')),
+    # ('ot', _('other'))
+    (0, _('not chosen')),
+    (1, _('ip conflict')),
+    (2, _('yellow triangle')),
+    (3, _('red cross')),
+    (4, _('weak speed')),
+    (5, _('cable break')),
+    (6, _('connection')),
+    (7, _('periodic disappearance')),
+    (8, _('router setup')),
+    (9, _('configure onu')),
+    (10, _('crimp cable')),
+    (11, _('Internet crash')),
+    (12, _('other'))
 )
 
 
 class ChangeLog(models.Model):
     task = models.ForeignKey('Task', on_delete=models.CASCADE)
     ACT_CHOICES = (
-        ('e', _('Change task')),
-        ('c', _('Create task')),
-        ('d', _('Delete task')),
-        ('f', _('Completing tasks')),
-        ('b', _('The task failed'))
+        # ('e', _('Change task')),
+        # ('c', _('Create task')),
+        # ('d', _('Delete task')),
+        # ('f', _('Completing tasks')),
+        # ('b', _('The task failed'))
+        (1, _('Change task')),
+        (2, _('Create task')),
+        (3, _('Delete task')),
+        (4, _('Completing tasks')),
+        (5, _('The task failed'))
     )
-    act_type = models.CharField(max_length=1, choices=ACT_CHOICES)
+    act_type = models.PositiveSmallIntegerField(choices=ACT_CHOICES)
     when = models.DateTimeField(auto_now_add=True)
     who = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -55,6 +81,9 @@ class ChangeLog(models.Model):
 
     def __str__(self):
         return self.get_act_type_display()
+
+    class Meta:
+        db_table = 'task_change_log'
 
 
 def delta_add_days():
@@ -75,8 +104,8 @@ class Task(models.Model):
         on_delete=models.SET_NULL, null=True,
         blank=True, verbose_name=_('Task author')
     )
-    priority = models.CharField(
-        _('A priority'), max_length=1,
+    priority = models.PositiveSmallIntegerField(
+        _('A priority'),
         choices=TASK_PRIORITIES, default=TASK_PRIORITIES[2][0]
     )
     out_date = models.DateField(
@@ -86,21 +115,22 @@ class Task(models.Model):
     time_of_create = models.DateTimeField(
         _('Date of create'), auto_now_add=True
     )
-    state = models.CharField(
-        _('Condition'), max_length=1, choices=TASK_STATES,
+    state = models.PositiveSmallIntegerField(
+        _('Condition'), choices=TASK_STATES,
         default=TASK_STATES[0][0]
     )
-    attachment = models.ImageField(
-        _('Attached image'), upload_to='task_attachments/%Y.%m.%d',
-        blank=True, null=True
-    )
-    mode = models.CharField(
-        _('The nature of the damage'), max_length=2,
-        choices=TASK_TYPES, default=TASK_TYPES[0][0]
+    # attachment = models.ImageField(
+    #     _('Attached image'), upload_to='task_attachments/%Y.%m.%d',
+    #     blank=True, null=True
+    # )
+    mode = models.PositiveSmallIntegerField(
+        _('The nature of the damage'),
+        choices=TASK_TYPES, default=0
     )
     abon = models.ForeignKey(
         Abon, on_delete=models.CASCADE, null=True,
-        blank=True, verbose_name=_('Subscriber')
+        blank=True, verbose_name=_('Subscriber'),
+        db_column='customer_id'
     )
 
     class Meta:
@@ -112,20 +142,20 @@ class Task(models.Model):
         )
 
     def finish(self, current_user):
-        self.state = 'F'  # Finished
+        self.state = 2  # Finished
         self.out_date = timezone.now()  # End time
         ChangeLog.objects.create(
             task=self,
-            act_type='f',
+            act_type=4,
             who=current_user
         )
         self.save(update_fields=('state', 'out_date'))
 
     def do_fail(self, current_user):
-        self.state = 'C'  # Crashed
+        self.state = 1  # Crashed
         ChangeLog.objects.create(
             task=self,
-            act_type='b',
+            act_type=5,
             who=current_user
         )
         self.save(update_fields=('state',))
@@ -137,7 +167,7 @@ class Task(models.Model):
         )
 
     def is_relevant(self):
-        return self.out_date < timezone.now().date() or self.state == 'F'
+        return self.out_date < timezone.now().date() or self.state == 2
 
 
 class ExtraComment(models.Model):
@@ -159,7 +189,7 @@ class ExtraComment(models.Model):
         return resolve_url('taskapp:edit', self.task.pk)
 
     class Meta:
-        db_table = 'extra_comments'
+        db_table = 'task_extra_comments'
         verbose_name = _('Extra comment')
         verbose_name_plural = _('Extra comments')
         ordering = ('-date_create',)
