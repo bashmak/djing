@@ -54,7 +54,7 @@ class BatchSaveStreamList(list):
         # image fields
         elif isinstance(field, ImageField):
             val = getattr(obj, field.name)
-            return getattr(val, 'url') if val else None
+            return getattr(val, 'name') if val else None
 
         # mac address validated by netaddr.EUI
         elif isinstance(field, MACAddressField):
