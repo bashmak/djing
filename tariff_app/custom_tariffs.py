@@ -83,10 +83,14 @@ class TariffDaily(TariffDp):
 
 # Первый - всегда по умолчанию
 TARIFF_CHOICES = (
-    ('Df', TariffDefault),
-    ('Dp', TariffDp),
-    ('Cp', TariffCp),
-    ('Dl', TariffDaily)
+    # ('Df', TariffDefault),
+    # ('Dp', TariffDp),
+    # ('Cp', TariffCp),
+    # ('Dl', TariffDaily)
+    (0, TariffDefault),
+    (1, TariffDp),
+    (2, TariffCp),
+    (3, TariffDaily)
 )
 
 
@@ -113,6 +117,8 @@ class PeriodicPayCalcCustom(PeriodicPayCalcDefault):
 
 
 PERIODIC_PAY_CHOICES = (
-    ('df', PeriodicPayCalcDefault),
-    ('cs', PeriodicPayCalcCustom)
+    # ('df', PeriodicPayCalcDefault),
+    # ('cs', PeriodicPayCalcCustom)
+    (0, PeriodicPayCalcDefault),
+    (1, PeriodicPayCalcCustom)
 )

@@ -78,7 +78,7 @@ class TariffDeleteView(LoginAdminMixin, PermissionRequiredMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         res = super().delete(request, *args, **kwargs)
-        request.user.log(request.META, 'dsrv', '"%(title)s", "%(descr)s", %(amount).2f' % {
+        request.user.log(request.META, 8, '"%(title)s", "%(descr)s", %(amount).2f' % {
             'title': self.object.title or '-',
             'descr': self.object.descr or '-',
             'amount': self.object.amount or 0.0

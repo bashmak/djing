@@ -9,7 +9,7 @@
                 <th>{% trans 'Date' %}</th>
                 <th>{% trans 'Additional' %}</th>
                 <th>{% trans 'Description' %}</th>
-                <th>{% trans 'Meta information' %}</th>
+{#                <th>{% trans 'Meta information' %}</th>#}
             </tr>
             </thead>
             <tbody>
@@ -18,10 +18,10 @@
                     <td>{{ log.action_date|date:'D d E Y H:i:s' }}</td>
                     <td>{{ log.additional_text|default_if_none:'-' }}</td>
                     <td>{{ log.get_do_type_display }}</td>
-                    <td>{{ log.meta_info }}</td>
+{#                    <td>{{ log.meta_info }}</td>#}
                 </tr>
             {% empty %}
-                <tr><td colspan="4">{% trans 'That admin has no logs' %}</td></tr>
+                <tr><td colspan="3">{% trans 'That admin has no logs' %}</td></tr>
             {% endfor %}
             </tbody>
         </table>

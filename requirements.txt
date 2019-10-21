@@ -27,6 +27,9 @@ webdavclient
 transliterate
 django-encrypted-model-fields
 
+# For compatible ip_pool app
+django-netfields
+
 # django-xmlview for pay system allpay
 -e git://github.com/nerosketch/django-xmlview.git#egg=django-xmlview
 

@@ -26,7 +26,7 @@ class NetworksListView(OrderedFilteredList):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if isinstance(self.device_kind_code, str):
+        if isinstance(self.device_kind_code, int):
             return qs.filter(kind=self.device_kind_code)
         return qs
 

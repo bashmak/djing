@@ -97,7 +97,7 @@ class BaseAccount(AbstractBaseUser, PermissionsMixin):
 
 class UserProfileLog(models.Model):
     account = models.ForeignKey('UserProfile', on_delete=models.CASCADE, verbose_name=_('Author'))
-    meta_info = JSONField(verbose_name=_('Meta information'))
+    # meta_info = JSONField(verbose_name=_('Meta information'))
     ACTION_TYPES = (
         (0, _('Undefined')),
         (1, _('Create user')),
@@ -167,7 +167,7 @@ class UserProfile(BaseAccount):
         self._thumbnail_avatar()
         return r
 
-    def log(self, request_meta: dict, do_type: str, additional_text=None) -> None:
+    def log(self, request_meta: dict, do_type: int, additional_text=None) -> None:
         """
         Make log about administrator actions.
         :param request_meta: META from django request.
@@ -175,15 +175,15 @@ class UserProfile(BaseAccount):
         :param additional_text: Additional information for action
         :return: None
         """
-        inf = {
-            'src_ip': request_meta.get('REMOTE_ADDR'),
-            'username': request_meta.get('USER'),
-            'hostname': request_meta.get('HOSTNAME'),
-            'useragent': request_meta.get('HTTP_USER_AGENT')
-        }
+        # inf = {
+        #     'src_ip': request_meta.get('REMOTE_ADDR'),
+        #     'username': request_meta.get('USER'),
+        #     'hostname': request_meta.get('HOSTNAME'),
+        #     'useragent': request_meta.get('HTTP_USER_AGENT')
+        # }
         UserProfileLog.objects.create(
             account=self,
-            meta_info=inf,
+            # meta_info=inf,
             do_type=do_type,
             additional_text=additional_text
         )

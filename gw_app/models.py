@@ -4,18 +4,21 @@ from django.dispatch import receiver
 from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+from encrypted_model_fields.fields import EncryptedCharField
 from djing.lib import MyChoicesAdapter
 from gw_app.nas_managers import NAS_TYPES, NasNetworkError
 
+
+# Maked compatible
 
 class NASModel(models.Model):
     title = models.CharField(_('Title'), max_length=127, unique=True)
     ip_address = models.GenericIPAddressField(_('Ip address'), unique=True)
     ip_port = models.PositiveSmallIntegerField(_('Port'))
     auth_login = models.CharField(_('Auth login'), max_length=64)
-    auth_passw = models.CharField(_('Auth password'), max_length=127)
-    nas_type = models.CharField(_('Type'), max_length=4, choices=MyChoicesAdapter(NAS_TYPES), default=NAS_TYPES[0][0])
-    default = models.BooleanField(_('Is default'), default=False)
+    auth_passw = EncryptedCharField(_('Auth password'), max_length=127)
+    nas_type = models.PositiveSmallIntegerField(_('Type'), choices=MyChoicesAdapter(NAS_TYPES), default=0, db_column='gw_type')
+    default = models.BooleanField(_('Is default'), default=False, db_column='is_default')
     enabled = models.BooleanField(_('Enabled'), default=True)
 
     def get_nas_manager_klass(self):
@@ -49,7 +52,7 @@ class NASModel(models.Model):
         return self.title
 
     class Meta:
-        db_table = 'nas'
+        db_table = 'gateways'
         verbose_name = _('Network access server. Gateway')
         verbose_name_plural = _('Network access servers. Gateways')
         ordering = 'ip_address',

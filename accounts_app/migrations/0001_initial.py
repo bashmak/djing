@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
             name='UserProfileLog',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('meta_info', jsonfield.fields.JSONField(verbose_name='Meta information')),
+                # ('meta_info', jsonfield.fields.JSONField(verbose_name='Meta information')),
                 ('do_type', models.PositiveSmallIntegerField(choices=[(0, 'Undefined'), (1, 'Create user'), (2, 'Delete user'), (3, 'Create device'), (4, 'Delete device'), (5, 'Create NAS'), (6, 'Delete NAS'), (7, 'Create service'), (8, 'Delete service')], default=0, verbose_name='Action type')),
                 ('additional_text', models.CharField(blank=True, max_length=512, null=True, verbose_name='Additional info')),
                 ('action_date', models.DateTimeField(auto_now_add=True, verbose_name='Action date')),

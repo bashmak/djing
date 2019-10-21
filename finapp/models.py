@@ -7,6 +7,8 @@ from encrypted_model_fields.fields import EncryptedCharField
 from abonapp.models import Abon
 
 
+# Maked compatible
+
 class AllTimePayLogManager(models.Manager):
     @staticmethod
     def by_days():
@@ -54,7 +56,8 @@ class AllTimePayLog(models.Model):
         on_delete=models.SET_DEFAULT,
         blank=True,
         null=True,
-        default=None
+        default=None,
+        db_column='customer_id'
     )
     pay_id = models.CharField(
         max_length=36,
@@ -62,7 +65,7 @@ class AllTimePayLog(models.Model):
         primary_key=True
     )
     date_add = models.DateTimeField(auto_now_add=True)
-    summ = models.FloatField(_('Cost'), default=0.0)
+    summ = models.FloatField(_('Cost'), default=0.0, db_column='sum')
     trade_point = models.CharField(
         _('Trade point'),
         max_length=20,

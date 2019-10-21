@@ -44,10 +44,10 @@ class AbonTariff(models.Model):
         Tariff,
         on_delete=models.CASCADE,
         related_name='linkto_tariff',
-        db_column='tariff_id'
+        db_column='service_id'
     )
 
-    time_start = models.DateTimeField(null=True, blank=True, default=None)
+    time_start = models.DateTimeField(null=True, blank=True, default=None, db_column='start_time')
 
     deadline = models.DateTimeField(null=True, blank=True, default=None)
 

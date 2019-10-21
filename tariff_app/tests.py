@@ -39,7 +39,7 @@ class ServiceTestCase(MyBaseTestCase, TestCase):
             speedIn=10.0,
             speedOut=2.0,
             amount=1.0,
-            calc_type='Df'
+            calc_type=0
         )
         trf.groups.add(self.group.pk)
         self.tariff = trf
@@ -54,7 +54,7 @@ class ServiceTestCase(MyBaseTestCase, TestCase):
             'speedIn': 10.0,
             'speedOut': 2.0,
             'amount': 1.0,
-            'calc_type': 'Df'
+            'calc_type': 0
         })
         try:
             Tariff.objects.get(title='same srv')

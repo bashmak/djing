@@ -56,7 +56,7 @@ class NASModelTestCase(MyBaseTestCase, TestCase):
             auth_login='admin',
             auth_passw='admin',
             default=True,
-            nas_type='mktk'
+            nas_type=0
         )
         self.nas = nas
 
@@ -72,7 +72,7 @@ class NASModelTestCase(MyBaseTestCase, TestCase):
             'ip_port': 1254,
             'auth_login': '_',
             'auth_passw': '_',
-            'nas_type': 'mktk'
+            'nas_type': 0
         })
         self.assertEqual(r.status_code, 302)
         msg = r.cookies.get('messages')
@@ -168,7 +168,7 @@ class NASModelTestCase(MyBaseTestCase, TestCase):
             'ip_port': 7865,
             'auth_login': '_w_c',
             'auth_passw': '_v_c',
-            'nas_type': 'mktk'
+            'nas_type': 0
         })
         self.assertRedirects(r, resolve_url('gw_app:edit', self.nas.pk))
         msg = r.cookies.get('messages')
@@ -188,7 +188,7 @@ class NASModelTestCase(MyBaseTestCase, TestCase):
             'ip_port': 1254,
             'auth_login': '_',
             'auth_passw': '_',
-            'nas_type': 'mktk'
+            'nas_type': 0
         })
         self.assertEqual(r.status_code, 302)
         o = NASModel.objects.get(

@@ -670,7 +670,7 @@ def fix_onu(request):
     status = 1
     text = '<span class="glyphicon glyphicon-exclamation-sign"></span>'
     try:
-        onu = Device.objects.get(mac_addr=mac, devtype='On')
+        onu = Device.objects.get(mac_addr=mac, devtype=3)
         parent = onu.parent_dev
         if parent is not None:
             manobj = parent.get_manager_object()

@@ -5,5 +5,6 @@ from gw_app.nas_managers.structs import SubnetQueue
 # Указываем какие реализации шлюзов у нас есть, это будет использоваться в
 # web интерфейсе
 NAS_TYPES = (
-    ('mktk', MikrotikTransmitter),
+    # ('mktk', MikrotikTransmitter),
+    (0, MikrotikTransmitter),
 )

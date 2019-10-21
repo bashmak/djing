@@ -9,23 +9,35 @@ from group_app.models import Group
 from djing.lib import MyChoicesAdapter
 from jsonfield import JSONField
 
+# Maked compatible
+
 
 class TariffManager(models.Manager):
     def get_tariffs_by_group(self, group_id):
         return self.filter(groups__id__in=(group_id,))
 
 
+class TariffGroup(models.Model):
+    tariff = models.ForeignKey('Tariff', on_delete=models.CASCADE, db_column='service_id')
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, db_column='group_id')
+
+    class Meta:
+        db_table = 'services_groups'
+
+
 class Tariff(models.Model):
     title = models.CharField(_('Service title'), max_length=32)
     descr = models.CharField(_('Service description'), max_length=256)
-    speedIn = models.FloatField(_('Speed In'), default=0.0)
-    speedOut = models.FloatField(_('Speed Out'), default=0.0)
-    amount = models.FloatField(_('Price'), default=0.0)
-    calc_type = models.CharField(_('Script'), max_length=2, default=TARIFF_CHOICES[0][0],
-                                 choices=MyChoicesAdapter(TARIFF_CHOICES))
+    speedIn = models.FloatField(_('Speed In'), default=0.0, db_column='speed_in')
+    speedOut = models.FloatField(_('Speed Out'), default=0.0, db_column='speed_out')
+    amount = models.FloatField(_('Price'), default=0.0, db_column='cost')
+    calc_type = models.PositiveSmallIntegerField(
+        _('Script'), default=0,
+        choices=MyChoicesAdapter(TARIFF_CHOICES)
+    )
     is_admin = models.BooleanField(_('Tech service'), default=False)
 
-    groups = models.ManyToManyField(Group, blank=True)
+    groups = models.ManyToManyField(Group, blank=True, through=TariffGroup, through_fields=('tariff', 'group'))
 
     objects = TariffManager()
 
@@ -54,7 +66,7 @@ class Tariff(models.Model):
         return resolve_url('tarifs:edit', self.pk)
 
     class Meta:
-        db_table = 'tariffs'
+        db_table = 'services'
         ordering = ('title',)
         verbose_name = _('Service')
         verbose_name_plural = _('Services')
@@ -64,10 +76,10 @@ class Tariff(models.Model):
 class PeriodicPay(models.Model):
     name = models.CharField(_('Periodic pay name'), max_length=64)
     when_add = models.DateTimeField(_('When pay created'), auto_now_add=True)
-    calc_type = models.CharField(_('Script type for calculations'), max_length=2, default='df',
-                                 choices=MyChoicesAdapter(PERIODIC_PAY_CHOICES))
+    calc_type = models.PositiveSmallIntegerField(_('Script type for calculations'), default=0,
+                                                 choices=MyChoicesAdapter(PERIODIC_PAY_CHOICES))
     amount = models.FloatField(_('Total amount'))
-    extra_info = JSONField()
+    extra_info = JSONField(null=True, blank=True)
 
     def _get_calc_object(self):
         """

@@ -6,29 +6,37 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from ip_pool.fields import GenericIpAddressWithPrefix
+from netfields import InetAddressField
 from group_app.models import Group
 
+
+# Maked compatible
 
 class NetworkModel(models.Model):
     _netw_cache = None
 
-    network = GenericIpAddressWithPrefix(
+    network = InetAddressField(
         verbose_name=_('IP network'),
         help_text=_('Ip address of network. For example: '
                     '192.168.1.0 or fde8:6789:1234:1::'),
         unique=True
     )
     NETWORK_KINDS = (
-        ('inet', _('Internet')),
-        ('guest', _('Guest')),
-        ('trust', _('Trusted')),
-        ('device', _('Devices')),
-        ('admin', _('Admin'))
+        # ('inet', _('Internet')),
+        # ('guest', _('Guest')),
+        # ('trust', _('Trusted')),
+        # ('device', _('Devices')),
+        # ('admin', _('Admin'))
+        (0, _('Not defined')),
+        (1, _('Internet')),
+        (2, _('Guest')),
+        (3, _('Trusted')),
+        (4, _('Devices')),
+        (5, _('Admin'))
     )
-    kind = models.CharField(
-        _('Kind of network'), max_length=6,
-        choices=NETWORK_KINDS, default='guest'
+    kind = models.PositiveSmallIntegerField(
+        _('Kind of network'),
+        choices=NETWORK_KINDS, default=0
     )
     description = models.CharField(_('Description'), max_length=64)
     groups = models.ManyToManyField(Group, verbose_name=_('Groups'))
@@ -154,7 +162,7 @@ class NetworkModel(models.Model):
                 return ip
 
     class Meta:
-        db_table = 'ip_pool_network'
+        db_table = 'networks_network'
         verbose_name = _('Network')
         verbose_name_plural = _('Networks')
         ordering = ('network',)

@@ -11,6 +11,8 @@ from viberbot.api.messages.message import Message
 from accounts_app.models import UserProfile
 
 
+# Maked compatible
+
 class Messenger(models.Model):
     title = models.CharField(_('Title'), max_length=64)
     CHAT_TYPES = (
@@ -96,7 +98,7 @@ class ViberMessenger(Messenger):
         return self.title
 
     class Meta:
-        db_table = 'viber_messenger_notifications'
+        db_table = 'messenger_viber'
         verbose_name = _('Viber messenger')
         verbose_name_plural = _('Viber messengers')
         ordering = ('title',)
@@ -113,7 +115,7 @@ class ViberMessage(models.Model):
         return self.msg
 
     class Meta:
-        db_table = 'viber_messages_notifications'
+        db_table = 'messenger_viber_messages'
         verbose_name = _('Viber message')
         verbose_name_plural = _('Viber messages')
         ordering = ('-date',)
@@ -129,7 +131,7 @@ class ViberSubscriber(models.Model):
         return self.name or 'no'
 
     class Meta:
-        db_table = 'viber_subscriber'
+        db_table = 'messenger_viber_subscriber'
         verbose_name = _('Viber subscriber')
         verbose_name_plural = _('Viber subscribers')
         ordering = ('name',)

@@ -12,6 +12,8 @@ from . import dev_types
 from .base_intr import DevBase
 
 
+# Maked compatible
+
 class DeviceDBException(Exception):
     pass
 
@@ -27,17 +29,26 @@ class Device(models.Model):
     mac_addr = MACAddressField(verbose_name=_('Mac address'), null=True, blank=True, unique=True)
     comment = models.CharField(_('Comment'), max_length=256)
     DEVICE_TYPES = (
-        ('Dl', dev_types.DLinkDevice),
-        ('Pn', dev_types.OLTDevice),
-        ('On', dev_types.OnuDevice),
-        ('Ex', dev_types.EltexSwitch),
-        ('Zt', dev_types.Olt_ZTE_C320),
-        ('Zo', dev_types.ZteOnuDevice),
-        ('Z6', dev_types.ZteF601),
-        ('Hw', dev_types.HuaweiSwitch)
+        # ('Dl', dev_types.DLinkDevice),
+        # ('Pn', dev_types.OLTDevice),
+        # ('On', dev_types.OnuDevice),
+        # ('Ex', dev_types.EltexSwitch),
+        # ('Zt', dev_types.Olt_ZTE_C320),
+        # ('Zo', dev_types.ZteOnuDevice),
+        # ('Z6', dev_types.ZteF601),
+        # ('Hw', dev_types.HuaweiSwitch)
+        (1, dev_types.DLinkDevice),
+        (2, dev_types.OLTDevice),
+        (3, dev_types.OnuDevice),
+        (4, dev_types.EltexSwitch),
+        (5, dev_types.Olt_ZTE_C320),
+        (6, dev_types.ZteOnuDevice),
+        (7, dev_types.ZteF601),
+        (8, dev_types.HuaweiSwitch)
     )
-    devtype = models.CharField(_('Device type'), max_length=2, default=DEVICE_TYPES[0][0],
-                               choices=MyChoicesAdapter(DEVICE_TYPES))
+    devtype = models.PositiveSmallIntegerField(_('Device type'), default=1,
+                                               choices=MyChoicesAdapter(DEVICE_TYPES),
+                                               db_column='dev_type')
     man_passw = models.CharField(_('SNMP password'), max_length=16, null=True, blank=True)
     group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('Device group'))
     parent_dev = models.ForeignKey('self', verbose_name=_('Parent device'), blank=True, null=True,
@@ -49,17 +60,21 @@ class Device(models.Model):
                            blank=True, null=True)
 
     NETWORK_STATES = (
-        ('und', _('Undefined')),
-        ('up', _('Up')),
-        ('unr', _('Unreachable')),
-        ('dwn', _('Down'))
+        # ('und', _('Undefined')),
+        # ('up', _('Up')),
+        # ('unr', _('Unreachable')),
+        # ('dwn', _('Down'))
+        (0, _('Undefined')),
+        (1, _('Up')),
+        (2, _('Unreachable')),
+        (3, _('Down'))
     )
-    status = models.CharField(_('Status'), max_length=3, choices=NETWORK_STATES, default='und')
+    status = models.PositiveSmallIntegerField(_('Status'), choices=NETWORK_STATES, default=0)
 
     is_noticeable = models.BooleanField(_('Send notify when monitoring state changed'), default=False)
 
     class Meta:
-        db_table = 'dev'
+        db_table = 'device'
         verbose_name = _('Device')
         verbose_name_plural = _('Devices')
         ordering = ('id',)
@@ -109,7 +124,7 @@ class Port(models.Model):
         return "%d: %s" % (self.num, self.descr)
 
     class Meta:
-        db_table = 'dev_port'
+        db_table = 'device_port'
         unique_together = ('device', 'num')
         permissions = (
             ('can_toggle_ports', _('Can toggle ports')),

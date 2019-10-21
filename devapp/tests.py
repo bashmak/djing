@@ -28,7 +28,7 @@ class DevTest(TestCase):
             ip_address='192.168.0.100',
             mac_addr='78:81:f2:1f:d2:a9',
             comment='Test device',
-            devtype='On',
+            devtype=3,
             man_passw='public',
             group=grp
         )
