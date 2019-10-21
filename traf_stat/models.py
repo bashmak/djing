@@ -74,7 +74,7 @@ class StatElem(models.Model):
     def delete_month(self):
         cursor = connection.cursor()
         table_name = self._meta.db_table
-        sql = "DROP TABLE %s;" % table_name
+        sql = "DROP TABLE IF EXISTS %s;" % table_name
         cursor.execute(sql)
 
     @staticmethod
@@ -142,4 +142,5 @@ class StatCache(models.Model):
 
     class Meta:
         db_table = 'flowcache'
-        ordering = ('-last_time',)
+        db_tablespace = 'ram'
+        # ordering = ('-last_time',)
