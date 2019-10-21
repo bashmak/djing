@@ -100,15 +100,15 @@ def batch_save(app_label: str, fname: str, *args, **kwargs):
 
 def dump_groups():
     from group_app.models import Group
-    batch_save('groupapp', "groups.json", Group.objects.all(), 'groupapp.group')
+    batch_save(app_label='groupapp', fname="groups.json", model_queryset=Group.objects.all(), model_name='groupapp.group')
 
 
 def dump_accounts():
     from accounts_app.models import UserProfile, BaseAccount, UserProfileLog
     app_label = 'profiles'
-    batch_save(app_label, 'accounts_app', 'accounts_baseaccount.json', BaseAccount.objects.exclude(username='AnonymousUser'), 'profiles.baseaccount',
+    batch_save(app_label=app_label, fname='accounts_baseaccount.json', model_queryset=BaseAccount.objects.exclude(username='AnonymousUser'), model_name='profiles.baseaccount',
                except_fields=['groups', 'user_permissions'])
-    batch_save(app_label, 'accounts_userprofile.json', UserProfile.objects.exclude(username='AnonymousUser'), 'profiles.userprofile',
+    batch_save(app_label=app_label, fname='accounts_userprofile.json', model_queryset=UserProfile.objects.exclude(username='AnonymousUser'), model_name='profiles.userprofile',
                except_fields=['groups', 'user_permissions'])
     do_type_map = {
         'cusr': 1, 'dusr': 2,
@@ -116,7 +116,7 @@ def dump_accounts():
         'cnas': 5, 'dnas': 6,
         'csrv': 7, 'dsrv': 8
     }
-    batch_save(app_label, 'accounts_userprofilelog.json', UserProfileLog.objects.all(), 'profiles.userprofilelog',
+    batch_save(app_label=app_label, fname='accounts_userprofilelog.json', model_queryset=UserProfileLog.objects.all(), model_name='profiles.userprofilelog',
                except_fields=['meta_info'],
                choice_list_map={
                    'do_type': do_type_map
@@ -280,10 +280,11 @@ def dump_tasks():
 
 def dump_fin():
     from finapp.models import PayAllTimeGateway, AllTimePayLog
-    app_label = 'tasks'
+    app_label = 'fin_app'
     batch_save(app_label, 'fin_gws.json', PayAllTimeGateway.objects.all(), 'fin_app.payalltimegateway')
     batch_save(app_label, 'fin_logs.json', AllTimePayLog.objects.all(), 'fin_app.alltimepaylog', field_name_map={
-        'abon': 'customer'
+        'abon': 'customer',
+        'summ': 'sum'
     })
 
 
