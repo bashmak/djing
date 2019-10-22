@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'flowcache',
-                'db_tablespace': 'ram',
+                # 'db_tablespace': 'ram',
             },
         ),
     ]
