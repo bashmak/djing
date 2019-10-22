@@ -3,7 +3,7 @@ import os
 from PIL import Image
 from bitfield.models import BitField
 
-from jsonfield import JSONField
+# from jsonfield import JSONField
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.core.validators import RegexValidator

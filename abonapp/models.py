@@ -22,8 +22,8 @@ from tariff_app.models import Tariff, PeriodicPay
 
 
 class AbonLog(models.Model):
-    abon = models.ForeignKey('Abon', on_delete=models.CASCADE)
-    amount = models.FloatField(default=0.0)
+    abon = models.ForeignKey('Abon', on_delete=models.CASCADE, db_column='customer_id')
+    amount = models.FloatField(default=0.0, db_column='cost')
     author = models.ForeignKey(
         UserProfile, on_delete=models.SET_NULL,
         related_name='+', blank=True, null=True
@@ -32,7 +32,7 @@ class AbonLog(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'abonent_log'
+        db_table = 'customer_log'
         ordering = '-date',
 
     def __str__(self):

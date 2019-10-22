@@ -52,7 +52,7 @@ class StatManager(models.Manager):
 
 class StatElem(models.Model):
     cur_time = UnixDateTimeField(primary_key=True)
-    abon = models.ForeignKey('abonapp.Abon', on_delete=models.CASCADE, null=True, default=None, blank=True)
+    abon = models.ForeignKey('abonapp.Abon', on_delete=models.CASCADE, null=True, default=None, blank=True, db_column='customer_id')
     ip = models.PositiveIntegerField()
     octets = models.PositiveIntegerField(default=0)
     packets = models.PositiveIntegerField(default=0)
@@ -114,7 +114,7 @@ def getModel(want_date=None):
 
 class StatCache(models.Model):
     last_time = UnixDateTimeField()
-    abon = models.OneToOneField('abonapp.Abon', on_delete=models.CASCADE, primary_key=True)
+    abon = models.OneToOneField('abonapp.Abon', on_delete=models.CASCADE, primary_key=True, db_column='customer_id')
     octets = models.PositiveIntegerField(default=0)
     packets = models.PositiveIntegerField(default=0)
 

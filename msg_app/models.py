@@ -69,15 +69,13 @@ class Message(models.Model):
         return self.text[:9]
 
     def _set_status(self, account, code):
-        try:
-            ms = MessageStatus.objects.get(msg=self, user=account)
-            if ms.status == code:
-                return False
-            ms.status = code
-            ms.save(update_fields=('status',))
-            return True
-        except MessageStatus.DoesNotExist:
+        states = tuple(st[0] for st in MessageStatus.MESSAGE_STATES)
+        if code not in states:
             return False
+        affected_count = MessageStatus.objects.filter(msg=self, user=account).update(state=code)
+        if affected_count > 0:
+            return True
+        return False
 
     def set_status_old(self, account):
         return self._set_status(account, 'old')
@@ -125,17 +123,15 @@ class ConversationMembership(models.Model):
         verbose_name_plural = _("Conversation memberships")
 
 
-def id_to_userprofile(acc):
-    if isinstance(acc, UserProfile):
-        return acc
-    try:
-        return UserProfile.objects.get(pk=acc)
-    except UserProfile.DoesNotExist:
-        raise MessageError(_('Participant profile does not found'))
-
-
 class ConversationManager(models.Manager):
     def create_conversation(self, author, other_participants, title=None):
+        def id_to_userprofile(acc):
+            if isinstance(acc, UserProfile):
+                return acc
+            try:
+                return UserProfile.objects.get(pk=acc)
+            except UserProfile.DoesNotExist:
+                raise MessageError(_('Participant profile does not found'))
         other_participants = tuple(
             id_to_userprofile(acc) for acc in other_participants
         )
@@ -231,7 +227,7 @@ class Conversation(models.Model):
         if isinstance(msg, Message):
             m = msg
         else:
-            m = Message.objects.get(pk=int(msg))
+            m = Message.objects.filter(pk=int(msg)).first()
         if m is None:
             return False
         else:
