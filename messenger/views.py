@@ -13,7 +13,7 @@ from viberbot.api.viber_requests import (
     ViberFailedRequest, ViberUnsubscribedRequest
 )
 
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from djing.lib.mixins import LoginAdminPermissionMixin, LoginAdminMixin
 from messenger import forms, models
 

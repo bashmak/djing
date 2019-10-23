@@ -5,7 +5,7 @@ from django.conf import settings
 import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
-import jsonfield.fields
+# import jsonfield.fields
 
 
 class Migration(migrations.Migration):
@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('auth', '0011_update_proxy_permissions'),
-        ('group_app', '0001_initial'),
+        ('groupapp', '0001_initial'),
     ]
 
     operations = [
@@ -42,11 +42,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('baseaccount_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='accounts_app.BaseAccount')),
+                ('baseaccount_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='profiles.BaseAccount')),
                 ('avatar', models.ImageField(blank=True, default=None, null=True, upload_to='user/avatar', verbose_name='Avatar')),
                 ('email', models.EmailField(blank=True, default='', max_length=254)),
                 ('flags', bitfield.models.BitField((('notify_task', 'Notification about tasks'), ('notify_msg', 'Notification about messages'), ('notify_mon', 'Notification from monitoring')), default=0, verbose_name='Settings flags')),
-                ('responsibility_groups', models.ManyToManyField(blank=True, to='group_app.Group', verbose_name='Responsibility groups')),
+                ('responsibility_groups', models.ManyToManyField(blank=True, to='groupapp.Group', verbose_name='Responsibility groups')),
             ],
             options={
                 'verbose_name': 'Staff account profile',
@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
                 'db_table': 'profiles_userprofile',
                 'ordering': ('fio',),
             },
-            bases=('accounts_app.baseaccount',),
+            bases=('profiles.baseaccount',),
         ),
         migrations.CreateModel(
             name='UserProfileLog',

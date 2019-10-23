@@ -3,7 +3,7 @@ from _socket import gaierror
 from smtplib import SMTPException
 from typing import Iterable
 
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags

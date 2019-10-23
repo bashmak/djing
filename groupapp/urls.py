@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'group_app'
+app_name = 'groupapp'
 
 urlpatterns = [
     path('', views.GroupListView.as_view(), name='group_list'),

@@ -2,9 +2,9 @@ from hashlib import sha256
 from django.shortcuts import resolve_url
 from django.test import TestCase, RequestFactory, override_settings
 
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from devapp.models import Device
-from group_app.models import Group
+from groupapp.models import Group
 
 rf = RequestFactory()
 API_SECRET = 'TestApiSecret'

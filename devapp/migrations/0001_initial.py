@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('group_app', '0001_initial'),
+        ('groupapp', '0001_initial'),
     ]
 
     operations = [
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('extra_data', jsonfield.fields.JSONField(blank=True, help_text='Extra data in JSON format. You may use it for your custom data', null=True, verbose_name='Extra data')),
                 ('status', models.PositiveSmallIntegerField(choices=[(0, 'Undefined'), (1, 'Up'), (2, 'Unreachable'), (3, 'Down')], default=0, verbose_name='Status')),
                 ('is_noticeable', models.BooleanField(default=False, verbose_name='Send notify when monitoring state changed')),
-                ('group', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='group_app.Group', verbose_name='Device group')),
+                ('group', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='groupapp.Group', verbose_name='Device group')),
                 ('parent_dev', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='devapp.Device', verbose_name='Parent device')),
             ],
             options={

@@ -10,7 +10,7 @@ from djing.lib.decorators import only_admins
 from guardian.decorators import permission_required_or_403 as permission_required
 from djing.global_base_views import OrderedFilteredList
 from ip_pool import models, forms
-from group_app.models import Group
+from groupapp.models import Group
 
 
 login_decs = login_required, only_admins

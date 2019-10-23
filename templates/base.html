@@ -46,8 +46,8 @@
                 </li>
             {% endif %}
 
-            {% if perms.group_app.view_group %}
-                {% url 'group_app:group_list' as group_list_link %}
+            {% if perms.groupapp.view_group %}
+                {% url 'groupapp:group_list' as group_list_link %}
                 <li{% if group_list_link in request.path %} class="active"{% endif %}>
                     <a href="{{ group_list_link }}">
                         <span class="glyphicon glyphicon-list-alt"></span> {% trans 'Groups' %}

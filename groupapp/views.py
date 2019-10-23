@@ -20,30 +20,30 @@ login_decs = login_required, only_admins
 
 
 @method_decorator(login_decs, name='dispatch')
-@method_decorator(permission_required('group_app.view_group'), name='dispatch')
+@method_decorator(permission_required('groupapp.view_group'), name='dispatch')
 class GroupListView(OrderedFilteredList):
     http_method_names = ('get',)
     paginate_by = getattr(settings, 'PAGINATION_ITEMS_PER_PAGE', 10)
-    template_name = 'group_app/group_list.html'
+    template_name = 'groupapp/group_list.html'
     model = models.Group
     context_object_name = 'groups'
 
     def get_queryset(self):
         queryset = get_objects_for_user(self.request.user,
-                                        'group_app.view_group', klass=self.model,
+                                        'groupapp.view_group', klass=self.model,
                                         accept_global_perms=False)
         return queryset
 
 
 @method_decorator(login_decs, name='dispatch')
-@method_decorator(permission_required('group_app.change_group'), name='dispatch')
+@method_decorator(permission_required('groupapp.change_group'), name='dispatch')
 class EditGroupView(UpdateView):
     http_method_names = ('get', 'post')
-    template_name = 'group_app/edit_group.html'
+    template_name = 'groupapp/edit_group.html'
     form_class = forms.GroupForm
     model = models.Group
     pk_url_kwarg = 'group_id'
-    success_url = reverse_lazy('group_app:group_list')
+    success_url = reverse_lazy('groupapp:group_list')
 
     def form_valid(self, form):
         messages.success(self.request, _('Group changes has been saved'))
@@ -55,12 +55,12 @@ class EditGroupView(UpdateView):
 
 
 @method_decorator(login_decs, name='dispatch')
-@method_decorator(permission_required('group_app.add_group'), name='dispatch')
+@method_decorator(permission_required('groupapp.add_group'), name='dispatch')
 class AddGroupView(CreateView):
     http_method_names = ('get', 'post')
-    template_name = 'group_app/add_group.html'
+    template_name = 'groupapp/add_group.html'
     form_class = forms.GroupForm
-    success_url = reverse_lazy('group_app:group_list')
+    success_url = reverse_lazy('groupapp:group_list')
 
     def form_valid(self, form):
         messages.success(self.request, _('New group are created'))
@@ -72,11 +72,11 @@ class AddGroupView(CreateView):
 
 
 @method_decorator(login_decs, name='dispatch')
-@method_decorator(permission_required('group_app:delete_group'), name='dispatch')
+@method_decorator(permission_required('groupapp:delete_group'), name='dispatch')
 class DeleteGroupView(DeleteView):
     model = models.Group
     pk_url_kwarg = 'group_id'
-    success_url = reverse_lazy('group_app:group_list')
+    success_url = reverse_lazy('groupapp:group_list')
 
     def delete(self, request, *args, **kwargs):
         group_id = self.kwargs.get('group_id')

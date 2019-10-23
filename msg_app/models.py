@@ -3,7 +3,7 @@ from kombu.exceptions import OperationalError
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from djing.tasks import send_email_notify
 
 

@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from djing.fields import MACAddressField
 from djing.lib import MyChoicesAdapter
-from group_app.models import Group
+from groupapp.models import Group
 from . import dev_types
 from .base_intr import DevBase
 

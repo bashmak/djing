@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from django.shortcuts import resolve_url
 from .base_intr import TariffBase, PeriodicPayCalcBase
 from .custom_tariffs import TARIFF_CHOICES, PERIODIC_PAY_CHOICES
-from group_app.models import Group
+from groupapp.models import Group
 from djing.lib import MyChoicesAdapter
 from jsonfield import JSONField
 

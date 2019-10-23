@@ -1,5 +1,5 @@
 from taskapp.models import Task
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 
 
 # Maked compatible

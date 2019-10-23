@@ -22,9 +22,9 @@ from djing.lib.decorators import only_admins, hash_auth_view
 from djing.lib.mixins import LoginAdminPermissionMixin, LoginAdminMixin
 # from djing.tasks import multicast_email_notify
 from easysnmp import EasySNMPTimeoutError, EasySNMPError
-from group_app.models import Group
+from groupapp.models import Group
 from abonapp.models import Abon
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from messenger.tasks import multicast_viber_notify
 from guardian.decorators import permission_required_or_403 as permission_required
 from guardian.shortcuts import get_objects_for_user
@@ -161,7 +161,7 @@ class DeviceUpdate(LoginAdminPermissionMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         group_id = self.kwargs.get('group_id')
         device_group = get_object_or_404(Group, pk=group_id)
-        if not request.user.has_perm('group_app.view_group', device_group):
+        if not request.user.has_perm('groupapp.view_group', device_group):
             raise PermissionDenied
         self.device_group = device_group
         return super().dispatch(request, *args, **kwargs)
@@ -235,7 +235,7 @@ class DeviceCreateView(LoginAdminMixin, PermissionRequiredMixin, CreateView):
     def dispatch(self, request, *args, **kwargs):
         group_id = self.kwargs.get('group_id')
         device_group = get_object_or_404(Group, pk=group_id)
-        if not request.user.has_perm('group_app.view_group', device_group):
+        if not request.user.has_perm('groupapp.view_group', device_group):
             raise PermissionDenied
         self.device_group = device_group
         return super().dispatch(request, *args, **kwargs)
@@ -600,7 +600,7 @@ class GroupsListView(LoginAdminMixin, global_base_views.OrderedFilteredList):
 
     def get_queryset(self):
         groups = get_objects_for_user(self.request.user,
-                                      'group_app.view_group', klass=Group,
+                                      'groupapp.view_group', klass=Group,
                                       accept_global_perms=False)
         return groups
 

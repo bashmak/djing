@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('group_app', '0001_initial'),
+        ('groupapp', '0001_initial'),
     ]
 
     operations = [
@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
             name='TariffGroup',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('group', models.ForeignKey(db_column='group_id', on_delete=django.db.models.deletion.CASCADE, to='group_app.Group')),
+                ('group', models.ForeignKey(db_column='group_id', on_delete=django.db.models.deletion.CASCADE, to='groupapp.Group')),
                 ('tariff', models.ForeignKey(db_column='service_id', on_delete=django.db.models.deletion.CASCADE, to='tariff_app.Tariff')),
             ],
             options={
@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='tariff',
             name='groups',
-            field=models.ManyToManyField(blank=True, through='tariff_app.TariffGroup', to='group_app.Group'),
+            field=models.ManyToManyField(blank=True, through='tariff_app.TariffGroup', to='groupapp.Group'),
         ),
         migrations.AlterUniqueTogether(
             name='tariff',

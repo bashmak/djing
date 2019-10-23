@@ -172,7 +172,7 @@ class BasicFinReport(LoginAdminMixin, ListView):
 
 class PayHistoryListView(LoginAdminMixin, PermissionRequiredMixin,
                          OrderedFilteredList):
-    permission_required = 'group_app.view_group'
+    permission_required = 'groupapp.view_group'
     context_object_name = 'pay_history'
     template_name = 'finapp/payHistory.html'
     model = AllTimePayLog

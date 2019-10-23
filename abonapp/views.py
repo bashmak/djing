@@ -30,7 +30,7 @@ from djing.lib.mixins import (
     LoginAdminPermissionMixin,
     LoginAdminMixin
 )
-from group_app.models import Group
+from groupapp.models import Group
 from guardian.decorators import \
     permission_required_or_403 as permission_required
 from guardian.shortcuts import get_objects_for_user, assign_perm
@@ -71,7 +71,7 @@ class PeoplesListView(LoginRequiredMixin, OnlyAdminsMixin,
         if gid < 1:
             return HttpResponseBadRequest('group id is broken')
         group = get_object_or_404(Group, pk=gid)
-        if not self.request.user.has_perm('group_app.view_group', group):
+        if not self.request.user.has_perm('groupapp.view_group', group):
             raise PermissionDenied
 
         context = super(PeoplesListView, self).get_context_data(**kwargs)
@@ -91,7 +91,7 @@ class GroupListView(LoginRequiredMixin, OnlyAdminsMixin, OrderedFilteredList):
     def get_queryset(self):
         queryset = get_objects_for_user(
             self.request.user,
-            'group_app.view_group', klass=Group,
+            'groupapp.view_group', klass=Group,
             use_groups=False,
             accept_global_perms=False
         )
@@ -110,7 +110,7 @@ class AbonCreateView(LoginRequiredMixin, OnlyAdminsMixin,
 
     def dispatch(self, request, *args, **kwargs):
         group = get_object_or_404(Group, pk=self.kwargs.get('gid'))
-        if not request.user.has_perm('group_app.view_group', group):
+        if not request.user.has_perm('groupapp.view_group', group):
             raise PermissionDenied
         self.group = group
         return super(AbonCreateView, self).dispatch(request, *args, **kwargs)
@@ -169,7 +169,7 @@ class DelAbonDeleteView(LoginAdminMixin, PermissionRequiredMixin, DeleteView):
 
     def get_object(self, queryset=None):
         abon = super(DelAbonDeleteView, self).get_object(queryset)
-        if not self.request.user.has_perm('group_app.view_group', abon.group):
+        if not self.request.user.has_perm('groupapp.view_group', abon.group):
             raise PermissionDenied
         return abon
 
@@ -243,7 +243,7 @@ def abonamount(request, gid: int, uname):
 
 
 class DebtsListView(LoginAdminPermissionMixin, OrderedFilteredList):
-    permission_required = 'group_app.view_group'
+    permission_required = 'groupapp.view_group'
     context_object_name = 'invoices'
     template_name = 'abonapp/invoiceForPayment.html'
 
@@ -283,7 +283,7 @@ class AbonServices(LoginAdminMixin, DetailView):
                 _("User group id is not matches with group in url")
             )
             return redirect('abonapp:abon_services', abon.group.pk, abon.username)
-        if not self.request.user.has_perm('group_app.view_group', abon.group):
+        if not self.request.user.has_perm('groupapp.view_group', abon.group):
             raise PermissionDenied
         return abon
 
@@ -330,7 +330,7 @@ class AbonHomeUpdateView(LoginAdminMixin, PermissionRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         gid = self.kwargs.get('gid')
         self.group = get_object_or_404(Group, pk=gid)
-        if not self.request.user.has_perm('group_app.view_group', self.group):
+        if not self.request.user.has_perm('groupapp.view_group', self.group):
             raise PermissionDenied
         return super(AbonHomeUpdateView, self).get_object(queryset)
 
@@ -516,7 +516,7 @@ class DebtorsListView(LoginAdminPermissionMixin, ListView):
 
 
 class TaskLogListView(LoginAdminPermissionMixin, ListView):
-    permission_required = 'group_app.view_group'
+    permission_required = 'groupapp.view_group'
     paginate_by = getattr(settings, 'PAGINATION_ITEMS_PER_PAGE', 10)
     http_method_names = ('get',)
     context_object_name = 'tasks'
@@ -631,7 +631,7 @@ class IpUpdateView(LoginAdminPermissionMixin, UpdateView):
 @only_admins
 def chgroup_tariff(request, gid):
     grp = get_object_or_404(Group, pk=gid)
-    if not request.user.has_perm('group_app.change_group', grp):
+    if not request.user.has_perm('groupapp.change_group', grp):
         raise PermissionDenied
     if request.method == 'POST':
         ma = frozenset(t.id for t in grp.tariff_set.all())
@@ -689,7 +689,7 @@ def dev(request, gid: int, uname):
 @login_required
 @only_admins
 @permission_required('abonapp.change_abon')
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def clear_dev(request, gid: int, uname):
     try:
         abon = models.Abon.objects.get(username=uname)
@@ -895,7 +895,7 @@ def save_user_dev_port(request, gid: int, uname):
 @login_required
 @only_admins
 @permission_required('abonapp.add_abonstreet')
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def street_add(request, gid):
     if request.method == 'POST':
         frm = forms.AbonStreetForm(request.POST)
@@ -916,7 +916,7 @@ def street_add(request, gid):
 @login_required
 @only_admins
 @permission_required('abonapp.change_abonstreet')
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def street_edit(request, gid):
     try:
         if request.method == 'POST':
@@ -941,7 +941,7 @@ def street_edit(request, gid):
 @login_required
 @only_admins
 @permission_required('abonapp.delete_abonstreet')
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def street_del(request, gid: int, sid: int):
     try:
         models.AbonStreet.objects.get(pk=sid, group=gid).delete()
@@ -953,7 +953,7 @@ def street_del(request, gid: int, sid: int):
 
 @login_required
 @only_admins
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def active_nets(request, gid):
     nets = NetworkModel.objects.filter(groups__id=gid)
     return render(request, 'abonapp/modal_current_networks.html', {
@@ -964,7 +964,7 @@ def active_nets(request, gid):
 @login_required
 @only_admins
 @permission_required('abonapp.view_additionaltelephones')
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def tels(request, gid: int, uname):
     abon = get_object_or_404(models.Abon, username=uname)
     telephones = abon.additional_telephones.all()
@@ -1016,7 +1016,7 @@ def tel_del(request, gid: int, uname):
 
 @login_required
 @only_admins
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def phonebook(request, gid):
     res_format = request.GET.get('f')
     t1 = models.Abon.objects.filter(
@@ -1048,7 +1048,7 @@ def phonebook(request, gid):
 
 @login_required
 @only_admins
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def abon_export(request, gid):
     res_format = request.GET.get('f')
 
@@ -1095,7 +1095,7 @@ def abon_export(request, gid):
 
 @login_required
 @only_admins
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 def add_edit_periodic_pay(request, gid: int, uname, periodic_pay_id=0):
     if periodic_pay_id == 0:
         if not request.user.has_perm('abonapp.add_periodicpayforid'):
@@ -1133,7 +1133,7 @@ def add_edit_periodic_pay(request, gid: int, uname, periodic_pay_id=0):
 
 @login_required
 @only_admins
-@permission_required('group_app.view_group', (Group, 'pk', 'gid'))
+@permission_required('groupapp.view_group', (Group, 'pk', 'gid'))
 @permission_required('abonapp.delete_periodicpayforid')
 def del_periodic_pay(request, gid: int, uname, periodic_pay_id):
     periodic_pay_instance = get_object_or_404(
@@ -1351,7 +1351,7 @@ class DhcpLever(SecureApiView):
 
 
 class PayHistoryListView(LoginAdminPermissionMixin, OrderedFilteredList):
-    permission_required = 'group_app.view_group'
+    permission_required = 'groupapp.view_group'
     context_object_name = 'pay_history'
     template_name = 'abonapp/payHistory.html'
 

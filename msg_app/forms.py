@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from .models import Conversation, Message, MessageError
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 
 
 class ConversationForm(forms.ModelForm):

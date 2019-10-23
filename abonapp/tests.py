@@ -2,14 +2,14 @@ from abc import ABCMeta
 from hashlib import md5
 from datetime import date
 
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from django.shortcuts import resolve_url
 from django.test import TestCase, RequestFactory
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from abonapp.models import Abon, AbonStreet, PassportInfo
-from group_app.models import Group
+from groupapp.models import Group
 from tariff_app.models import Tariff
 from ip_pool.models import NetworkModel
 

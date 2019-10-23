@@ -4,8 +4,8 @@ from django.conf import settings
 from django.shortcuts import resolve_url
 from django.test import TestCase
 
-from accounts_app.models import UserProfile
-from group_app.models import Group
+from profiles.models import UserProfile
+from groupapp.models import Group
 from tariff_app.models import Tariff
 
 

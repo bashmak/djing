@@ -24,7 +24,7 @@
                 <th width="50">#</th>
                 <th width="50">{% trans 'TeCo' %}</th>
                 <th>
-                    <a href="{% url 'group_app:group_list' %}?{% url_order_by request order_by='title' %}">
+                    <a href="{% url 'groupapp:group_list' %}?{% url_order_by request order_by='title' %}">
                         {% trans 'Title' %}
                     </a>
                     {% if order_by == 'title' %}<span class="glyphicon glyphicon-filter"></span>{% endif %}
@@ -38,15 +38,15 @@
                     <td>{{ gr.pk }}</td>
                     <td>{{ gr.code }}</td>
                     <td>
-                        <a href="{% url 'group_app:edit' gr.pk %}" class="btn-modal"{% if gr.code %} title="{{ gr.code }}" data-toggle="tooltip"{% endif %}>
+                        <a href="{% url 'groupapp:edit' gr.pk %}" class="btn-modal"{% if gr.code %} title="{{ gr.code }}" data-toggle="tooltip"{% endif %}>
                             {{ gr.title }}
                         </a>
                     </td>
                     <td class="btn-group btn-group-sm">
-                        <a href="{% url 'group_app:edit' gr.pk %}" class="btn btn-default btn-modal">
+                        <a href="{% url 'groupapp:edit' gr.pk %}" class="btn btn-default btn-modal">
                             <span class="glyphicon glyphicon-cog"></span>
                         </a>
-                        <a href="{% url 'group_app:del' gr.pk %}" class="btn btn-danger btn-modal">
+                        <a href="{% url 'groupapp:del' gr.pk %}" class="btn btn-danger btn-modal">
                             <span class="glyphicon glyphicon-remove"></span>
                         </a>
                     </td>
@@ -60,7 +60,7 @@
             <tfoot>
             <tr>
                 <td colspan="4" class="btn-group btn-group-sm">
-                    <a href="{% url 'group_app:add' %}" class="btn btn-success btn-modal">
+                    <a href="{% url 'groupapp:add' %}" class="btn btn-success btn-modal">
                         <span class="glyphicon glyphicon-plus"></span> <span class="hidden-xs">{% trans 'Add group' %}</span>
                     </a>
                 </td>

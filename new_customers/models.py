@@ -4,7 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import RegexValidator
 
-from group_app.models import Group
+from groupapp.models import Group
 
 
 class PotentialSubscriber(models.Model):

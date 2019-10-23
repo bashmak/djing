@@ -1,11 +1,11 @@
 from abc import ABCMeta
 
 from abonapp.models import Abon
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from django.conf import settings
 from django.shortcuts import resolve_url
 from django.test import TestCase, override_settings
-from group_app.models import Group
+from groupapp.models import Group
 from gw_app.models import NASModel
 from gw_app.nas_managers import MikrotikTransmitter
 

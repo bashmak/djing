@@ -13,11 +13,11 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('accounts_app', '0001_initial'),
+        ('profiles', '0001_initial'),
         ('devapp', '0001_initial'),
         ('tariff_app', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('group_app', '0001_initial'),
+        ('groupapp', '0001_initial'),
         ('gw_app', '0001_initial'),
     ]
 
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Abon',
             fields=[
-                ('baseaccount_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='accounts_app.BaseAccount')),
+                ('baseaccount_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='profiles.BaseAccount')),
                 ('ballance', models.FloatField(db_column='balance', default=0.0)),
                 ('ip_address', models.GenericIPAddressField(blank=True, null=True, verbose_name='Ip address')),
                 ('description', models.TextField(blank=True, null=True, verbose_name='Comment')),
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
                 'ordering': ('fio',),
                 'permissions': (('can_buy_tariff', 'Buy service perm'), ('can_add_ballance', 'fill account'), ('can_ping', 'Can ping')),
             },
-            bases=('accounts_app.baseaccount',),
+            bases=('profiles.baseaccount',),
         ),
         migrations.CreateModel(
             name='AbonRawPassword',
@@ -139,7 +139,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=64, verbose_name='Street title')),
-                ('group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='group_app.Group', verbose_name='User group')),
+                ('group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='groupapp.Group', verbose_name='User group')),
             ],
             options={
                 'verbose_name': 'Street',
@@ -181,7 +181,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='abon',
             name='group',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='group_app.Group', verbose_name='User group'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='groupapp.Group', verbose_name='User group'),
         ),
         migrations.AddField(
             model_name='abon',

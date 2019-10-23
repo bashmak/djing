@@ -6,7 +6,7 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><span class="glyphicon glyphicon-home"></span></li>
-        <li><a href="{% url 'group_app:group_list' %}">{% trans 'Groups' %}</a></li>
+        <li><a href="{% url 'groupapp:group_list' %}">{% trans 'Groups' %}</a></li>
         <li class="active">{% block active_text %}{% trans 'Groups' %}{% endblock %}</li>
     </ol>
 {% endblock %}

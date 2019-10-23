@@ -99,12 +99,12 @@ def batch_save(app_label: str, fname: str, *args, **kwargs):
 
 
 def dump_groups():
-    from group_app.models import Group
+    from groupapp.models import Group
     batch_save(app_label='groupapp', fname="groups.json", model_queryset=Group.objects.all(), model_name='groupapp.group')
 
 
 def dump_accounts():
-    from accounts_app.models import UserProfile, BaseAccount, UserProfileLog
+    from profiles.models import UserProfile, BaseAccount, UserProfileLog
     app_label = 'profiles'
     batch_save(app_label=app_label, fname='accounts_baseaccount.json', model_queryset=BaseAccount.objects.exclude(username='AnonymousUser'), model_name='profiles.baseaccount',
                except_fields=['groups', 'user_permissions'])

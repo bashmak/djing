@@ -9,7 +9,7 @@ from django.db.models import Count
 from django.views.generic import ListView
 from django.conf import settings
 
-from group_app.models import Group
+from groupapp.models import Group
 from .models import Dot
 from .forms import DotForm
 from djing.lib import safe_int

@@ -8,10 +8,10 @@ from django.utils.html import escape
 from xmltodict import parse
 
 from abonapp.models import Abon
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from djing import settings
 from finapp.models import PayAllTimeGateway
-from group_app.models import Group
+from groupapp.models import Group
 
 
 def _make_sign(act: int, pay_account: str, serv_id: str, pay_id, secret: str):

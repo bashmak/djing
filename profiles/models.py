@@ -10,7 +10,7 @@ from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.shortcuts import resolve_url
-from group_app.models import Group
+from groupapp.models import Group
 
 
 # Maked compatible

@@ -7,7 +7,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from netfields import InetAddressField
-from group_app.models import Group
+from groupapp.models import Group
 
 
 # Maked compatible

@@ -8,7 +8,7 @@ class Group(models.Model):
     code = models.CharField(_('Tech code'), blank=True, max_length=12)
 
     def get_absolute_url(self):
-        return resolve_url('group_app:edit', self.pk)
+        return resolve_url('groupapp:edit', self.pk)
 
     class Meta:
         db_table = 'groups'

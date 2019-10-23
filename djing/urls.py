@@ -5,7 +5,7 @@ from .views import home
 
 urlpatterns = [
     path('', home),
-    path('accounts/', include('accounts_app.urls', namespace='acc_app')),
+    path('accounts/', include('profiles.urls', namespace='acc_app')),
     path('abons/', include('abonapp.urls', namespace='abonapp')),
     path('tarifs/', include('tariff_app.urls', namespace='tarifs')),
     path('search/', include('searchapp.urls', namespace='searchapp')),
@@ -15,7 +15,7 @@ urlpatterns = [
     path('tasks/', include('taskapp.urls', namespace='taskapp')),
     path('client/', include('clientsideapp.urls', namespace='client_side')),
     path('msg/', include('msg_app.urls', namespace='msg_app')),
-    path('groups/', include('group_app.urls', namespace='group_app')),
+    path('groups/', include('groupapp.urls', namespace='groupapp')),
     path('ip_pool/', include('ip_pool.urls', namespace='ip_pool')),
     path('messenger/', include('messenger.urls', namespace='messenger')),
     path('gw/', include('gw_app.urls', namespace='gw_app')),

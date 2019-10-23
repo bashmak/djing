@@ -14,10 +14,10 @@ from django.utils.translation import ugettext as _
 from django.views.generic import ListView, UpdateView, DetailView
 from django.conf import settings
 
-from group_app.models import Group
+from groupapp.models import Group
 
 from .models import UserProfile, UserProfileLog
-from accounts_app import forms
+from profiles import forms
 from djing.lib.decorators import only_admins
 from djing.lib.mixins import OnlyAdminsMixin, LoginAdminPermissionMixin, OnlySuperUserMixin
 from guardian.decorators import permission_required_or_403 as permission_required
@@ -135,7 +135,7 @@ class UpdateSelfAccount(LoginRequiredMixin, UpdateView):
 
 @login_required
 @only_admins
-@permission_required('accounts_app.add_userprofile')
+@permission_required('profiles.add_userprofile')
 def create_profile(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -191,7 +191,7 @@ class AccountsListView(LoginRequiredMixin, OnlyAdminsMixin, ListView):
 
     def get_queryset(self):
         users = UserProfile.objects.filter(is_admin=True).exclude(pk=self.request.user.pk)
-        users = get_objects_for_user(self.request.user, 'accounts_app.view_userprofile', users)
+        users = get_objects_for_user(self.request.user, 'profiles.view_userprofile', users)
         return users
 
 
@@ -201,10 +201,10 @@ def perms_object(request, uid: int):
         raise PermissionDenied
     userprofile = get_object_or_404(UserProfile, id=uid)
     klasses = (
-        'abonapp.Abon', 'accounts_app.UserProfile',
+        'abonapp.Abon', 'profiles.UserProfile',
         'abonapp.AbonTariff', 'abonapp.AbonStreet', 'devapp.Device',
         'abonapp.PassportInfo', 'abonapp.AdditionalTelephone', 'tariff_app.PeriodicPay',
-        'group_app.Group'
+        'groupapp.Group'
     )
     return render(request, 'accounts/perms/object/objects_types.html', {
         'userprofile': userprofile,
@@ -303,7 +303,7 @@ def set_abon_groups_permission(request, uid: int):
         raise PermissionDenied
     userprofile = get_object_or_404(UserProfile, pk=uid)
 
-    picked_groups = get_objects_for_user(userprofile, 'group_app.view_group', accept_global_perms=False)
+    picked_groups = get_objects_for_user(userprofile, 'groupapp.view_group', accept_global_perms=False)
     picked_groups = picked_groups.values_list('pk', flat=True)
 
     if request.method == 'POST':
@@ -357,7 +357,7 @@ class ManageResponsibilityGroups(LoginRequiredMixin, OnlyAdminsMixin, ListView):
 class ActionListView(LoginAdminPermissionMixin, ListView):
     paginate_by = getattr(settings, 'PAGINATION_ITEMS_PER_PAGE', 10)
     template_name = 'accounts/action_log.html'
-    permission_required = 'accounts_app.view_userprofilelog'
+    permission_required = 'profiles.view_userprofilelog'
     model = UserProfileLog
 
     def get_queryset(self):

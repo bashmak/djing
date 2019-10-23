@@ -2,7 +2,7 @@ from typing import Optional, Iterable
 
 from celery import shared_task
 
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 from messenger.models import ViberMessenger
 
 
@@ -11,7 +11,7 @@ def send_viber_message(messenger_id: Optional[int], account_id: int, message_tex
     """
     Send text message via viber
     :param messenger_id: Primary key UID for messanger.ViberMessenger
-    :param account_id: User id from accounts_app.UserProfile
+    :param account_id: User id from profiles.UserProfile
     :param message_text:
     :return: Optional text for log
     """
@@ -28,7 +28,7 @@ def send_viber_message(messenger_id: Optional[int], account_id: int, message_tex
     except ViberMessenger.DoesNotExist:
         return 'ERROR: Viber messanger with id=%d not found' % messenger_id
     except UserProfile.DoesNotExist:
-        return 'ERROR: accounts_app.UserProfile with pk=%d does not exist' % account_id
+        return 'ERROR: profiles.UserProfile with pk=%d does not exist' % account_id
 
 
 @shared_task
@@ -36,7 +36,7 @@ def multicast_viber_notify(messenger_id: Optional[int], account_id_list: Iterabl
     """
     Send multiple message via Viber to several addresses
     :param messenger_id: Primary key UID for messanger.ViberMessenger
-    :param account_id_list: list of account ids from accounts_app.UserProfile
+    :param account_id_list: list of account ids from profiles.UserProfile
     :param message_text:
     :return: Optional text for log
     """

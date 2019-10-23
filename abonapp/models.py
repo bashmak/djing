@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from accounts_app.models import UserProfile, MyUserManager, BaseAccount
+from profiles.models import UserProfile, MyUserManager, BaseAccount
 from bitfield import BitField
 from django.conf import settings
 from django.core import validators
@@ -13,7 +13,7 @@ from django.shortcuts import resolve_url
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _, gettext
 from djing.lib import LogicError
-from group_app.models import Group
+from groupapp.models import Group
 from gw_app.nas_managers import SubnetQueue, NasFailedResult, NasNetworkError
 from tariff_app.models import Tariff, PeriodicPay
 
@@ -227,7 +227,7 @@ class Abon(BaseAccount):
         """
         Trying to buy a service if enough money.
         :param tariff: instance of tariff_app.models.Tariff.
-        :param author: Instance of accounts_app.models.UserProfile.
+        :param author: Instance of profiles.models.UserProfile.
         Who connected this service. May be None if author is a system.
         :param comment: Optional text for logging this pay.
         :param deadline: Instance of datetime.datetime. Date when service is

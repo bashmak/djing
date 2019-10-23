@@ -19,7 +19,7 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: models.py:7 templates/group_app/group_list.html:22
+#: models.py:7 templates/groupapp/group_list.html:22
 msgid "Title"
 msgstr "Название"
 
@@ -31,9 +31,9 @@ msgstr "Технический код"
 msgid "Group"
 msgstr "Группа"
 
-#: models.py:20 templates/group_app/ext.html:7 templates/group_app/ext.html:8
-#: templates/group_app/ext.html:14 templates/group_app/group_list.html:7
-#: templates/group_app/group_list.html:10
+#: models.py:20 templates/groupapp/ext.html:7 templates/groupapp/ext.html:8
+#: templates/groupapp/ext.html:14 templates/groupapp/group_list.html:7
+#: templates/groupapp/group_list.html:10
 msgid "Groups"
 msgstr "Группы"
 

@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'bootstrap3',
     'ip_pool',
-    'accounts_app',
+    'profiles',
     'gw_app',
     'abonapp',
     'tariff_app',
@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'clientsideapp',
     'messenger',
     'msg_app',
-    'group_app',
+    'groupapp',
     'new_customers',
     'docsapp'
 ]
@@ -182,7 +182,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_PICTURE = '/static/img/user_ava.gif'
-AUTH_USER_MODEL = 'accounts_app.UserProfile'
+AUTH_USER_MODEL = 'profiles.UserProfile'
 
 LOGIN_URL = reverse_lazy('acc_app:login')
 LOGIN_REDIRECT_URL = reverse_lazy('acc_app:setup_info')

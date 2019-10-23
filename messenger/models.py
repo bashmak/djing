@@ -8,7 +8,7 @@ from viberbot import Api, BotConfiguration
 from viberbot.api.messages import TextMessage
 from viberbot.api.messages.message import Message
 
-from accounts_app.models import UserProfile
+from profiles.models import UserProfile
 
 
 # Maked compatible
@@ -71,7 +71,7 @@ class ViberMessenger(Messenger):
 
     def send_message_to_accs(self, receivers, msg_text: str):
         """
-        :param receivers: QuerySet of accounts_app.UserProfile
+        :param receivers: QuerySet of profiles.UserProfile
         :param msg_text: text message
         :return: nothing
         """
