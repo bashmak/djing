@@ -7,7 +7,7 @@ from django import setup
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import ImageField, ManyToManyField, ManyToOneRel
 
-from djing.fields import MACAddressField
+from netfields import MACAddressField
 
 
 class BatchSaveStreamList(list):

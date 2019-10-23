@@ -5,7 +5,7 @@ from django.db import models
 from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
 
-from djing.fields import MACAddressField
+from netfields import MACAddressField
 from djing.lib import MyChoicesAdapter
 from groupapp.models import Group
 from . import dev_types
@@ -26,7 +26,7 @@ class Device(models.Model):
     _cached_manager = None
 
     ip_address = models.GenericIPAddressField(verbose_name=_('Ip address'), null=True, blank=True)
-    mac_addr = MACAddressField(verbose_name=_('Mac address'), null=True, blank=True, unique=True)
+    mac_addr = MACAddressField(verbose_name=_('Mac address'), unique=True)
     comment = models.CharField(_('Comment'), max_length=256)
     DEVICE_TYPES = (
         # ('Dl', dev_types.DLinkDevice),
