@@ -1,6 +1,7 @@
 from ipaddress import ip_address, ip_network
 from json import dumps
 
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.decorators import method_decorator
 from django.views.generic.base import View
 from django.http.response import HttpResponseForbidden, Http404, HttpResponseRedirect, HttpResponse
@@ -27,7 +28,7 @@ class HashAuthView(View):
     def __init__(self, *args, **kwargs):
         api_auth_secret = getattr(settings, 'API_AUTH_SECRET')
         if api_auth_secret is None or api_auth_secret == 'your api secret':
-            raise NotImplementedError('You must specified API_AUTH_SECRET in settings')
+            raise ImproperlyConfigured('You must specified API_AUTH_SECRET in settings')
         else:
             super(HashAuthView, self).__init__(*args, **kwargs)
 

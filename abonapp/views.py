@@ -1305,6 +1305,7 @@ class DhcpLever(SecureApiView):
 
     @method_decorator(json_view)
     def get(self, request, *args, **kwargs):
+        del args, kwargs
         data = request.GET.copy()
         try:
             r = self.on_dhcp_event(data)
