@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
+from encrypted_model_fields.fields import EncryptedCharField
 from profiles.models import UserProfile, MyUserManager, BaseAccount
 from bitfield import BitField
 from django.conf import settings
@@ -453,8 +454,7 @@ class InvoiceForPayment(models.Model):
 
 class AbonRawPassword(models.Model):
     account = models.OneToOneField(Abon, models.CASCADE, primary_key=True, db_column='customer_id')
-    # TODO: make password to EncryptedCharField
-    passw_text = models.CharField(max_length=64)
+    passw_text = EncryptedCharField(max_length=64)
 
     def __str__(self):
         return "%s - %s" % (self.account, self.passw_text)
