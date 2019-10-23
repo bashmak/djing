@@ -11,16 +11,19 @@ netaddr
 dicttoxml
 
 # db client for Mariadb
-mysqlclient
+#mysqlclient
 
--e git://github.com/nerosketch/easysnmp.git#egg=easysnmp
+# db client for POSTGRESQL db
+psycopg2-binary
+
+git+git://github.com/nerosketch/easysnmp.git#egg=easysnmp
 pid
 django-guardian
 pinax-theme-bootstrap
 django-bootstrap3
 
 # django-jsonfield
--e git://github.com/dmkoch/django-jsonfield.git#egg=django-jsonfield
+git+git://github.com/dmkoch/django-jsonfield.git#egg=django-jsonfield
 
 requests
 webdavclient
@@ -31,19 +34,19 @@ django-encrypted-model-fields
 django-netfields
 
 # django-xmlview for pay system allpay
--e git://github.com/nerosketch/django-xmlview.git#egg=django-xmlview
+git+git://github.com/nerosketch/django-xmlview.git#egg=django-xmlview
 
 # django-bitfield
--e git://github.com/disqus/django-bitfield.git#egg=django-bitfield
+git+git://github.com/disqus/django-bitfield.git#egg=django-bitfield
 
 # django_cleanup for clean unused media
--e git://github.com/un1t/django-cleanup.git#egg=django_cleanup
+git+git://github.com/un1t/django-cleanup.git#egg=django_cleanup
 
 # viberbot
--e git://github.com/Viber/viber-bot-python.git#egg=viberbot
+git+git://github.com/Viber/viber-bot-python.git#egg=viberbot
 
 # pexpect
--e git://github.com/pexpect/pexpect.git#egg=pexpect
+git+git://github.com/pexpect/pexpect.git#egg=pexpect
 
 Celery
 redis
