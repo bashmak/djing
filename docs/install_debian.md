@@ -259,7 +259,7 @@ __sha256__. Секретное слово должен знать биллинг
 ```bash
 $ ./manage.py migrate
 Operations to perform:
-  Apply all migrations: mapapp, contenttypes, msg_app, taskapp, accounts_app, devapp, statistics, tariff_app, admin, sessions, chatbot, auth, abonapp
+  Apply all migrations: mapapp, contenttypes, msg_app, tasks, accounts_app, devapp, statistics, tariff_app, admin, sessions, chatbot, auth, abonapp
 Running migrations:
   Rendering model states... DONE
   Applying mapapp.0001_initial... OK
@@ -268,10 +268,10 @@ Running migrations:
   Applying devapp.0003_device_map_dot... OK
   Applying contenttypes.0001_initial... OK
 ...
-  Applying taskapp.0012_auto_20170407_0124... OK
-  Applying taskapp.0013_auto_20170413_1944... OK
-  Applying taskapp.0014_auto_20170416_1029... OK
-  Applying taskapp.0015_auto_20170816_1109... OK
+  Applying tasks.0012_auto_20170407_0124... OK
+  Applying tasks.0013_auto_20170413_1944... OK
+  Applying tasks.0014_auto_20170416_1029... OK
+  Applying tasks.0015_auto_20170816_1109... OK
 ```
 
 После этого вам стоит создать супер пользователя чтоб зайти в систему.

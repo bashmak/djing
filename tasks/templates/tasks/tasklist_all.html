@@ -6,7 +6,7 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><span class="glyphicon glyphicon-home"></span></li>
-        <li><a href="{% url 'taskapp:home' %}">{% trans 'Tasks' %}</a></li>
+        <li><a href="{% url 'tasks:home' %}">{% trans 'Tasks' %}</a></li>
         <li class="active">{% trans 'All tasks' %}</li>
     </ol>
 {% endblock %}
@@ -91,13 +91,13 @@
                 </td>
 
                 <td class="btn-group btn-group-sm btn-group-justified">
-                    {% if perms.taskapp.change_task %}
-                        <a href="{% url 'taskapp:edit' task.pk %}" class="btn btn-default" title="{% trans 'Edit' %}" data-toggle="tooltip">
+                    {% if perms.tasks.change_task %}
+                        <a href="{% url 'tasks:edit' task.pk %}" class="btn btn-default" title="{% trans 'Edit' %}" data-toggle="tooltip">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                     {% endif %}
-                    {% if perms.taskapp.can_remind %}
-                        <a href="{% url 'taskapp:remind' task.pk %}" class="btn btn-default" title="{% trans 'Remind' %}" data-toggle="tooltip">
+                    {% if perms.tasks.can_remind %}
+                        <a href="{% url 'tasks:remind' task.pk %}" class="btn btn-default" title="{% trans 'Remind' %}" data-toggle="tooltip">
                             <span class="glyphicon glyphicon-bell"></span>
                         </a>
                     {% endif %}
@@ -112,8 +112,8 @@
             <tfoot>
             <tr>
                 <td colspan="8">
-                    {% if perms.taskapp.add_task %}
-                    <a href="{% url 'taskapp:add' %}" class="btn btn-sm btn-success" title="{% trans 'Add new task' %}" data-toggle="tooltip">
+                    {% if perms.tasks.add_task %}
+                    <a href="{% url 'tasks:add' %}" class="btn btn-sm btn-success" title="{% trans 'Add new task' %}" data-toggle="tooltip">
                         <span class="glyphicon glyphicon-plus"></span> {% trans 'Add new task' %}
                     </a>
                     {% endif %}

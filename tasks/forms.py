@@ -2,7 +2,7 @@ from django.utils.translation import ugettext as _
 from django import forms
 from .models import Task, ExtraComment, delta_add_days
 from profiles.models import UserProfile
-from taskapp.handle import TaskException
+from tasks.handle import TaskException
 
 
 class TaskFrm(forms.ModelForm):

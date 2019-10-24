@@ -244,7 +244,7 @@ def dump_networks():
 
 
 def dump_tasks():
-    from taskapp.models import Task, ExtraComment, ChangeLog
+    from tasks.models import Task, ExtraComment, ChangeLog
     app_label = 'tasks'
     batch_save(app_label, 'task.json', Task.objects.all(), 'tasks.task', field_name_map={
         'abon': 'customer'

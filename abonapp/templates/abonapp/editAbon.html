@@ -71,8 +71,8 @@
                                     {% bootstrap_button _('Save') button_type='button' icon='floppy-disk' button_class='btn-primary disabled' %}
                                 {% endif %}
 
-                                {% if perms.taskapp.add_task %}
-                                    <a href="{% url 'taskapp:add' %}?uname={{ abon.username }}" class="btn btn-success" title="{% trans 'Add new task' %}">
+                                {% if perms.tasks.add_task %}
+                                    <a href="{% url 'tasks:add' %}?uname={{ abon.username }}" class="btn btn-success" title="{% trans 'Add new task' %}">
 					                    <span class="glyphicon glyphicon-plus"></span>
                                         {% trans 'Add new task' %}
                                     </a>

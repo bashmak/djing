@@ -29,9 +29,9 @@ class NewTasksView(LoginAdminPermissionMixin, ListView):
     """
     http_method_names = ('get',)
     paginate_by = getattr(settings, 'PAGINATION_ITEMS_PER_PAGE', 10)
-    template_name = 'taskapp/tasklist.html'
+    template_name = 'tasks/tasklist.html'
     context_object_name = 'tasks'
-    permission_required = 'taskapp.view_task'
+    permission_required = 'tasks.view_task'
 
     def get_queryset(self):
         return Task.objects.filter(
@@ -47,7 +47,7 @@ class FailedTasksView(NewTasksView):
     """
     Show crashed tasks
     """
-    template_name = 'taskapp/tasklist_failed.html'
+    template_name = 'tasks/tasklist_failed.html'
     context_object_name = 'tasks'
 
     def get_queryset(self):
@@ -59,7 +59,7 @@ class FailedTasksView(NewTasksView):
 
 
 class FinishedTaskListView(NewTasksView):
-    template_name = 'taskapp/tasklist_finish.html'
+    template_name = 'tasks/tasklist_finish.html'
 
     def get_queryset(self):
         return Task.objects.filter(
@@ -70,7 +70,7 @@ class FinishedTaskListView(NewTasksView):
 
 
 class OwnTaskListView(NewTasksView):
-    template_name = 'taskapp/tasklist_own.html'
+    template_name = 'tasks/tasklist_own.html'
 
     def get_queryset(self):
         # Attached and not finished tasks
@@ -82,7 +82,7 @@ class OwnTaskListView(NewTasksView):
 
 
 class MyTaskListView(NewTasksView):
-    template_name = 'taskapp/tasklist.html'
+    template_name = 'tasks/tasklist.html'
 
     def get_queryset(self):
         # Tasks in which I participated
@@ -96,9 +96,9 @@ class MyTaskListView(NewTasksView):
 class AllTasksListView(LoginAdminMixin, LoginRequiredMixin, ListView):
     http_method_names = ('get',)
     paginate_by = getattr(settings, 'PAGINATION_ITEMS_PER_PAGE', 10)
-    template_name = 'taskapp/tasklist_all.html'
+    template_name = 'tasks/tasklist_all.html'
     context_object_name = 'tasks'
-    permission_required = 'taskapp.can_viewall'
+    permission_required = 'tasks.can_viewall'
 
     def get_queryset(self):
         return Task.objects.annotate(
@@ -115,7 +115,7 @@ class AllNewTasksListView(AllTasksListView):
 
 
 class EmptyTasksListView(NewTasksView):
-    template_name = 'taskapp/tasklist_empty.html'
+    template_name = 'tasks/tasklist_empty.html'
 
     def get_queryset(self):
         return Task.objects.annotate(
@@ -125,7 +125,7 @@ class EmptyTasksListView(NewTasksView):
 
 @login_required
 @only_admins
-@permission_required('taskapp.delete_task')
+@permission_required('tasks.delete_task')
 def task_delete(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     # prevent to delete task that assigned to me
@@ -135,12 +135,12 @@ def task_delete(request, task_id):
         messages.warning(
             request, _('You cannot delete task that assigned to you')
         )
-    return redirect('taskapp:home')
+    return redirect('tasks:home')
 
 
 class TaskUpdateView(LoginAdminMixin, UpdateView):
     http_method_names = ('get', 'post')
-    template_name = 'taskapp/add_edit_task.html'
+    template_name = 'tasks/add_edit_task.html'
     form_class = TaskFrm
     context_object_name = 'task'
 
@@ -159,10 +159,10 @@ class TaskUpdateView(LoginAdminMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         task_id = safe_int(self.kwargs.get('task_id', 0))
         if task_id == 0:
-            if not request.user.has_perm('taskapp.add_task'):
+            if not request.user.has_perm('tasks.add_task'):
                 raise PermissionDenied
         else:
-            if not request.user.has_perm('taskapp.change_task'):
+            if not request.user.has_perm('tasks.change_task'):
                 raise PermissionDenied
 
         # check if new task with user already exists
@@ -172,7 +172,7 @@ class TaskUpdateView(LoginAdminMixin, UpdateView):
             if exists_task.exists():
                 messages.info(request, _('New task with this user already exists.'
                                          ' You are redirected to it.'))
-                return redirect('taskapp:edit', exists_task.first().pk)
+                return redirect('tasks:edit', exists_task.first().pk)
 
         try:
             return super(TaskUpdateView, self).dispatch(request, *args, **kwargs)
@@ -193,7 +193,7 @@ class TaskUpdateView(LoginAdminMixin, UpdateView):
             if exists_task.exists():
                 messages.info(self.request, _('New task with this user already exists.'
                                               ' You are redirected to it.'))
-                return redirect('taskapp:edit', exists_task.first().pk)
+                return redirect('tasks:edit', exists_task.first().pk)
 
         try:
             self.object = form.save()
@@ -244,9 +244,9 @@ class TaskUpdateView(LoginAdminMixin, UpdateView):
     def get_success_url(self):
         task_id = safe_int(self.kwargs.get('task_id'))
         if task_id == 0:
-            return resolve_url('taskapp:own_tasks')
+            return resolve_url('tasks:own_tasks')
         else:
-            return resolve_url('taskapp:edit', task_id)
+            return resolve_url('tasks:edit', task_id)
 
     def form_invalid(self, form):
         messages.add_message(
@@ -268,7 +268,7 @@ def task_finish(request, task_id):
             messages.add_message(request, messages.constants.ERROR, err)
     except TaskException as e:
         messages.error(request, e)
-    return redirect('taskapp:home')
+    return redirect('tasks:home')
 
 
 @login_required
@@ -280,12 +280,12 @@ def task_failed(request, task_id):
         task.send_notification()
     except TaskException as e:
         messages.error(request, e)
-    return redirect('taskapp:home')
+    return redirect('tasks:home')
 
 
 @login_required
 @only_admins
-@permission_required('taskapp.can_remind')
+@permission_required('tasks.can_remind')
 def remind(request, task_id):
     try:
         task = get_object_or_404(Task, id=task_id)
@@ -297,14 +297,14 @@ def remind(request, task_id):
             messages.add_message(request, messages.constants.ERROR, err)
     except TaskException as e:
         messages.error(request, e)
-    return redirect('taskapp:home')
+    return redirect('tasks:home')
 
 
 class NewCommentView(LoginAdminMixin, LoginRequiredMixin, CreateView):
     form_class = ExtraCommentForm
     model = ExtraComment
     http_method_names = ('get', 'post')
-    permission_required = 'taskapp.add_extracomment'
+    permission_required = 'tasks.add_extracomment'
 
     def form_valid(self, form):
         self.task = get_object_or_404(Task, pk=self.kwargs.get('task_id'))
@@ -313,9 +313,9 @@ class NewCommentView(LoginAdminMixin, LoginRequiredMixin, CreateView):
             task=self.task
         )
         author = self.object.author
-        assign_perm('taskapp.change_extracomment', author, self.object)
-        assign_perm('taskapp.delete_extracomment', author, self.object)
-        assign_perm('taskapp.view_extracomment', author, self.object)
+        assign_perm('tasks.change_extracomment', author, self.object)
+        assign_perm('tasks.delete_extracomment', author, self.object)
+        assign_perm('tasks.view_extracomment', author, self.object)
         return FormMixin.form_valid(self, form)
 
 
@@ -323,8 +323,8 @@ class DeleteCommentView(LoginAdminPermissionMixin, DeleteView):
     model = ExtraComment
     pk_url_kwarg = 'comment_id'
     http_method_names = ('get', 'post')
-    template_name = 'taskapp/comments/extracomment_confirm_delete.html'
-    permission_required = 'taskapp.delete_extracomment'
+    template_name = 'tasks/comments/extracomment_confirm_delete.html'
+    permission_required = 'tasks.delete_extracomment'
 
     def get_context_data(self, **kwargs):
         context = {
@@ -335,4 +335,4 @@ class DeleteCommentView(LoginAdminPermissionMixin, DeleteView):
 
     def get_success_url(self):
         task_id = self.kwargs.get('task_id')
-        return resolve_url('taskapp:edit', task_id)
+        return resolve_url('tasks:edit', task_id)

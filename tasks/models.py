@@ -186,7 +186,7 @@ class ExtraComment(models.Model):
         return self.text
 
     def get_absolute_url(self):
-        return resolve_url('taskapp:edit', self.task.pk)
+        return resolve_url('tasks:edit', self.task.pk)
 
     class Meta:
         db_table = 'task_extra_comments'

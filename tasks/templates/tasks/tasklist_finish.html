@@ -1,7 +1,7 @@
-{% extends request.is_ajax|yesno:'nullcont.htm,taskapp/ext.htm' %}
+{% extends request.is_ajax|yesno:'nullcont.htm,tasks/ext.htm' %}
 {% load i18n %}
 
-{% block title %}{% trans 'Scheduled tasks me' %}{% endblock %}
+{% block title %}{% trans 'Completed tasks' %}{% endblock %}
 
 {% block content %}
     <div class="table-responsive">
@@ -9,17 +9,16 @@
             <thead>
             <tr>
                 <th class="hidden-xs">#</th>
-                <th class="col-md-2 col-sm-3">{% trans 'Name' %}</th>
-                <th class="col-md-2 col-sm-1">{% trans 'Address' %}</th>
+                <th class="col-sm-3">{% trans 'Name' %}</th>
+                <th class="col-sm-2">{% trans 'Address' %}</th>
                 <th class="col-sm-1">{% trans 'The nature of the damage' %}</th>
                 <th class="col-sm-4">{% trans 'Description' %}</th>
-                <th class="col-sm-1">{% trans 'Condition' %}</th>
+                <th class="col-sm-1">{% trans 'Task author' %}</th>
                 <th class="col-sm-1 hidden-xs">{% trans 'Date of create' %}</th>
-                <th class="col-sm-1">{% trans 'Actions' %}</th>
+                <th>#</th>
             </tr>
             </thead>
             <tbody>
-            {% with can_change_task=perms.taskapp.change_task can_remind=perms.taskapp.can_remind can_del_task=perms.taskapp.delete_task %}
             {% for task in tasks %}
 
                 {% if task.is_relevant %}
@@ -36,7 +35,7 @@
                     {% endif %}
                 {% endif %}
 
-                <td class="hidden-xs"><a href="{% url 'taskapp:edit' task.id %}">{{ task.id }}</a></td>
+                <td class="hidden-xs"><a href="{% url 'tasks:edit' task.pk %}">{{ task.pk }}</a></td>
 
                 {% if task.abon and task.abon.group %}
                     <td>
@@ -54,39 +53,36 @@
                 {% endif %}
 
                 <td>{{ task.get_mode_display }}</td>
-                <td>{{ task.descr|default:'' }}</td>
-                <td>{{ task.get_state_display }}</td>
+                <td>{{ task.descr|default:_('None') }}</td>
+                <td>
+                    {% if task.author %}
+                    <a href="{% url 'acc_app:other_profile' task.author.pk %}" data-toggle="tooltip" title="{{ task.author.get_full_name }}">
+                        {{ task.author.username }}
+                    </a>
+                    {% else %}
+                    {% trans 'Author does not specified' %}
+                    {% endif %}
+                </td>
                 <td class="hidden-xs">{{ task.time_of_create|date:'d E H:i' }}</td>
 
-                <td class="btn-group btn-group-justified">
-                    {% if can_change_task %}
-                    <a href="{% url 'taskapp:edit' task.id %}" class="btn btn-sm btn-default" title="{% trans 'Edit' %}">
+                <td>
+                    {% if perms.tasks.change_task %}
+                    <a href="{% url 'tasks:edit' task.pk %}" class="btn btn-sm btn-default" title="{% trans 'Edit' %}" data-toggle="tooltip">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                    {% endif %}
-                    {% if can_remind %}
-                        <a href="{% url 'taskapp:remind' task.id %}" class="btn btn-default btn-sm" title="{% trans 'Remind' %}">
-                            <span class="glyphicon glyphicon-bell"></span>
-                        </a>
-                    {% endif %}
-                    {% if can_del_task %}
-                        <a href="{% url 'taskapp:delete' task.id %}" class="btn btn-sm btn-danger" title="{% trans 'Delete' %}">
-                            <span class="glyphicon glyphicon-remove-circle"></span>
-                        </a>
                     {% endif %}
                 </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="8">{% trans 'All your tasks has been performed' %}</td>
+                    <td colspan="8">{% trans 'The list is empty' %}</td>
                 </tr>
             {% endfor %}
-            {% endwith %}
             </tbody>
             <tfoot>
             <tr>
                 <td colspan="8">
-                    {% include 'taskapp/footer_btns.html' %}
+                    {% include 'tasks/footer_btns.html' %}
                 </td>
             </tr>
             </tfoot>

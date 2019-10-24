@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'mapapp',
     'traf_stat',
     'finapp',
-    'taskapp',
+    'tasks',
     'clientsideapp',
     'messenger',
     'msg_app',
@@ -96,7 +96,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
-                'taskapp.context_proc.get_active_tasks_count',
+                'tasks.context_proc.get_active_tasks_count',
                 'msg_app.context_processors.get_new_messages_count'
             ],
             'libraries': {

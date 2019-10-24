@@ -19,35 +19,35 @@
 
     <ul class="nav nav-tabs">
 
-        {% url 'taskapp:home' as taskhome %}
+        {% url 'tasks:home' as taskhome %}
         <li{% if taskhome == request.path %} class="active"{% endif %}>
             <a href="{{ taskhome }}">
                 {% trans 'New tasks' %}
             </a>
         </li>
 
-        {% url 'taskapp:finished_tasks' as taskfin %}
+        {% url 'tasks:finished_tasks' as taskfin %}
         <li{% if taskfin == request.path %} class="active"{% endif %}>
             <a href="{{ taskfin }}">
                 {% trans 'Completed tasks' %}
             </a>
         </li>
 
-        {% url 'taskapp:own_tasks' as taskown %}
+        {% url 'tasks:own_tasks' as taskown %}
         <li{% if taskown == request.path %} class="active"{% endif %}>
             <a href="{{ taskown }}">
                 {% trans 'Scheduled tasks me' %}
             </a>
         </li>
 
-        {% url 'taskapp:failed_tasks' as taskfailed %}
+        {% url 'tasks:failed_tasks' as taskfailed %}
         <li{% if taskfailed == request.path %} class="active"{% endif %}>
             <a href="{{ taskfailed }}">
                 {% trans 'Failed tasks' %}
             </a>
         </li>
 
-        {% url 'taskapp:my_tasks' as taskmy %}
+        {% url 'tasks:my_tasks' as taskmy %}
         <li{% if taskmy == request.path %} class="active"{% endif %}>
             <a href="{{ taskmy }}">
                 {% trans 'All my tasks' %}

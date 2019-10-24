@@ -38,7 +38,7 @@ from gw_app.models import NASModel
 from gw_app.nas_managers import NasFailedResult, NasNetworkError
 from ip_pool.models import NetworkModel
 from tariff_app.models import Tariff
-from taskapp.models import Task
+from tasks.models import Task
 from abonapp import forms
 from abonapp import models
 

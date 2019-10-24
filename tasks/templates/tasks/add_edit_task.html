@@ -12,7 +12,7 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><span class="glyphicon glyphicon-home"></span></li>
-	    <li><a href="{% url 'taskapp:home' %}">{% trans 'Tasks' %}</a></li>
+	    <li><a href="{% url 'tasks:home' %}">{% trans 'Tasks' %}</a></li>
 	    <li class="active">{% if task.id %}{% trans 'Edit' %}{% else %}{% trans 'Create' %}{% endif %}</li>
     </ol>
 {% endblock %}
@@ -32,9 +32,9 @@
                 <div class="panel-body">
 
                     {% if task.id %}
-                        <form role="form" action="{% url 'taskapp:edit' task.id %}" method="post" enctype="multipart/form-data">
+                        <form role="form" action="{% url 'tasks:edit' task.id %}" method="post" enctype="multipart/form-data">
                     {% else %}
-                        <form role="form" action="{% url 'taskapp:add' %}" method="post" enctype="multipart/form-data">
+                        <form role="form" action="{% url 'tasks:add' %}" method="post" enctype="multipart/form-data">
                     {% endif %}
                     {% csrf_token %}<input type="hidden" name="MAX_FILE_SIZE" value="{% global_var 'FILE_UPLOAD_MAX_MEMORY_SIZE' %}"/>
 
@@ -80,10 +80,10 @@
                         {% bootstrap_button _('Save') button_type='submit' button_class='btn-primary' icon='save' %}
 
                         {% if task.id %}
-                            {% url 'taskapp:delete' task.id as delurl%}
+                            {% url 'tasks:delete' task.id as delurl%}
                             {% bootstrap_button _('Delete') button_class='btn-danger' href=delurl icon='remove' %}
 
-                            {% url 'taskapp:finish' task.id as cmpurl %}
+                            {% url 'tasks:finish' task.id as cmpurl %}
                             {% bootstrap_button _('Complete') button_class='btn-success' href=cmpurl icon='ok' %}
                         {% endif %}
                     </div>
@@ -93,11 +93,11 @@
         </div>
         {% if task %}
             <div class="col-sm-6">
-                {% include 'taskapp/details.html' with task=task time_diff=time_diff %}
+                {% include 'tasks/details.html' with task=task time_diff=time_diff %}
             </div>
-            {% if perms.taskapp.view_extracomment %}
+            {% if perms.tasks.view_extracomment %}
                 <div class="col-sm-6">
-                    {% include "taskapp/comments/task_comments.html" with comments=comments task_uid=task.pk comment_form=comment_form %}
+                    {% include "tasks/comments/task_comments.html" with comments=comments task_uid=task.pk comment_form=comment_form %}
                 </div>
             {% endif %}
         {% endif %}

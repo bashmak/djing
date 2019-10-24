@@ -1,4 +1,4 @@
-from taskapp.models import Task
+from tasks.models import Task
 from profiles.models import UserProfile
 
 

@@ -9,7 +9,7 @@
                 {% with author=comment.author %}
                     <div class="list-group-item">
                         {% if comment.author == request.user %}
-                            <a href="{% url 'taskapp:comment_del' task_uid comment.pk %}" class="btn btn-link pull-right btn-modal" title="{% trans 'Delete' %}" data-toggle="tooltip">
+                            <a href="{% url 'tasks:comment_del' task_uid comment.pk %}" class="btn btn-link pull-right btn-modal" title="{% trans 'Delete' %}" data-toggle="tooltip">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>
                         {% endif %}
@@ -25,8 +25,8 @@
                 </div>
             {% endfor %}
         </div>
-        {% if perms.taskapp.add_extracomment %}
-            <form action="{% url 'taskapp:comment_add' task_uid %}" method="post">{% csrf_token %}
+        {% if perms.tasks.add_extracomment %}
+            <form action="{% url 'tasks:comment_add' task_uid %}" method="post">{% csrf_token %}
                 {% bootstrap_form comment_form %}
                 {% buttons %}
                     <button type="submit" class="btn btn-primary">

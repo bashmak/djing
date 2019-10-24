@@ -1,5 +1,5 @@
 {% load i18n %}
-<form action="{% url 'taskapp:comment_del' task_id object.pk %}" method="post">{% csrf_token %}
+<form action="{% url 'tasks:comment_del' task_id object.pk %}" method="post">{% csrf_token %}
 
     <div class="modal-header warning">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

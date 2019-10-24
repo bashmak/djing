@@ -1,4 +1,4 @@
-{% extends request.is_ajax|yesno:'nullcont.htm,taskapp/ext.htm' %}
+{% extends request.is_ajax|yesno:'nullcont.htm,tasks/ext.htm' %}
 {% load i18n tasktags %}
 {% block content %}
 
@@ -72,14 +72,14 @@
                 </td>
 
                 <td class="btn-group btn-group-xs btn-group-justified">
-                    <a href="{% url 'taskapp:finish' task.pk %}" class="btn btn-success" data-toggle="tooltip" title="{% trans 'Complete' %}">
+                    <a href="{% url 'tasks:finish' task.pk %}" class="btn btn-success" data-toggle="tooltip" title="{% trans 'Complete' %}">
                         <span class="glyphicon glyphicon-ok"></span>
                     </a>
-                    <a href="{% url 'taskapp:fail' task.pk %}" class="btn btn-danger" data-toggle="tooltip" title="{% trans 'Mark as unsuccessful' %}">
+                    <a href="{% url 'tasks:fail' task.pk %}" class="btn btn-danger" data-toggle="tooltip" title="{% trans 'Mark as unsuccessful' %}">
                         <span class="glyphicon glyphicon-fire"></span>
                     </a>
-                    {% if perms.taskapp.change_task %}
-                    <a href="{% url 'taskapp:edit' task.pk %}" class="btn btn-default" data-toggle="tooltip" title="{% trans 'Edit' %}">
+                    {% if perms.tasks.change_task %}
+                    <a href="{% url 'tasks:edit' task.pk %}" class="btn btn-default" data-toggle="tooltip" title="{% trans 'Edit' %}">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                     {% endif %}
@@ -94,7 +94,7 @@
             <tfoot>
             <tr>
                 <td colspan="7">
-                    {% include 'taskapp/footer_btns.html' %}
+                    {% include 'tasks/footer_btns.html' %}
                 </td>
             </tr>
             </tfoot>

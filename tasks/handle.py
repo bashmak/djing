@@ -29,7 +29,7 @@ def handle(task, author, recipients):
     if task.state in (1, 2):
         task_status = _('Task completed')
 
-    fulltext = render_to_string('taskapp/notification.html', {
+    fulltext = render_to_string('tasks/notification.html', {
         'task': task,
         'abon': task.abon,
         'task_status': task_status

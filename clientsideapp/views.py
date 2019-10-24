@@ -9,7 +9,7 @@ from abonapp.models import AbonLog, InvoiceForPayment, Abon
 from abonapp.tasks import customer_nas_command
 from djing.lib.decorators import json_view
 from tariff_app.models import Tariff
-from taskapp.models import Task
+from tasks.models import Task
 from djing.lib import LogicError
 from gw_app.nas_managers import NasFailedResult, NasNetworkError
 

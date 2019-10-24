@@ -1,4 +1,4 @@
-{% extends request.is_ajax|yesno:'nullcont.htm,taskapp/ext.htm' %}
+{% extends request.is_ajax|yesno:'nullcont.htm,tasks/ext.htm' %}
 {% load i18n %}
 
 {% block title %}{% trans 'Failed tasks' %}{% endblock %}
@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            {% with has_change_task=perms.taskapp.change_task %}
+            {% with has_change_task=perms.tasks.change_task %}
             {% for task in tasks %}
 
                 {% if task.is_relevant %}
@@ -41,7 +41,7 @@
                     {% endif %}
                 {% endif %}
 
-                <td class="hidden-xs"><a href="{% url 'taskapp:edit' task.pk %}">{{ task.pk }}</a></td>
+                <td class="hidden-xs"><a href="{% url 'tasks:edit' task.pk %}">{{ task.pk }}</a></td>
 
                 {% if task.abon and task.abon.group %}
                     <td><a href="{% url 'abonapp:abon_home' task.abon.group.pk task.abon.username %}">{{ task.abon.get_full_name }}</a></td>
@@ -64,11 +64,11 @@
                 <td class="hidden-xs">{{ task.time_of_create|date:'d E H:i' }}</td>
 
                 <td class="btn-group btn-group-sm btn-group-justified">
-                    <a href="{% url 'taskapp:finish' task.pk %}" class="btn btn-success" title="{% trans 'Complete' %}" data-toggle="tooltip">
+                    <a href="{% url 'tasks:finish' task.pk %}" class="btn btn-success" title="{% trans 'Complete' %}" data-toggle="tooltip">
                         <span class="glyphicon glyphicon-ok"></span>
                     </a>
                     {% if has_change_task %}
-                        <a href="{% url 'taskapp:edit' task.pk %}" class="btn btn-default" title="{% trans 'Edit' %}" data-toggle="tooltip">
+                        <a href="{% url 'tasks:edit' task.pk %}" class="btn btn-default" title="{% trans 'Edit' %}" data-toggle="tooltip">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                     {% endif %}
@@ -84,7 +84,7 @@
             <tfoot>
             <tr>
                 <td colspan="8">
-                    {% include 'taskapp/footer_btns.html' %}
+                    {% include 'tasks/footer_btns.html' %}
                 </td>
             </tr>
             </tfoot>

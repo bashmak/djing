@@ -135,12 +135,12 @@ msgstr "Завершение задачи"
 msgid "The task failed"
 msgstr "Задача провалена"
 
-#: models.py:67 templates/taskapp/details.html:8
-#: templates/taskapp/tasklist.html:12 templates/taskapp/tasklist_all.html:28
-#: templates/taskapp/tasklist_empty.html:18
-#: templates/taskapp/tasklist_failed.html:18
-#: templates/taskapp/tasklist_finish.html:13
-#: templates/taskapp/tasklist_own.html:13
+#: models.py:67 templates/tasks/details.html:8
+#: templates/tasks/tasklist.html:12 templates/tasks/tasklist_all.html:28
+#: templates/tasks/tasklist_empty.html:18
+#: templates/tasks/tasklist_failed.html:18
+#: templates/tasks/tasklist_finish.html:13
+#: templates/tasks/tasklist_own.html:13
 msgid "Description"
 msgstr "Описание"
 
@@ -148,34 +148,34 @@ msgstr "Описание"
 msgid "Recipients"
 msgstr "Исполнители"
 
-#: models.py:77 templates/taskapp/details.html:10
-#: templates/taskapp/tasklist.html:13 templates/taskapp/tasklist_all.html:29
-#: templates/taskapp/tasklist_empty.html:19
-#: templates/taskapp/tasklist_failed.html:19
-#: templates/taskapp/tasklist_finish.html:14
+#: models.py:77 templates/tasks/details.html:10
+#: templates/tasks/tasklist.html:13 templates/tasks/tasklist_all.html:29
+#: templates/tasks/tasklist_empty.html:19
+#: templates/tasks/tasklist_failed.html:19
+#: templates/tasks/tasklist_finish.html:14
 msgid "Task author"
 msgstr "Автор задачи"
 
-#: models.py:80 templates/taskapp/details.html:23
+#: models.py:80 templates/tasks/details.html:23
 msgid "A priority"
 msgstr "Приоритет"
 
-#: models.py:84 templates/taskapp/add_edit_task.html:66
+#: models.py:84 templates/tasks/add_edit_task.html:66
 msgid "Reality"
 msgstr "Актуальность (дата, до которой нужно завершить задачу)"
 
-#: models.py:88 templates/taskapp/details.html:25
-#: templates/taskapp/tasklist.html:14 templates/taskapp/tasklist_all.html:31
-#: templates/taskapp/tasklist_empty.html:20
-#: templates/taskapp/tasklist_failed.html:20
-#: templates/taskapp/tasklist_finish.html:15
-#: templates/taskapp/tasklist_own.html:15
+#: models.py:88 templates/tasks/details.html:25
+#: templates/tasks/tasklist.html:14 templates/tasks/tasklist_all.html:31
+#: templates/tasks/tasklist_empty.html:20
+#: templates/tasks/tasklist_failed.html:20
+#: templates/tasks/tasklist_finish.html:15
+#: templates/tasks/tasklist_own.html:15
 msgid "Date of create"
 msgstr "Дата создания"
 
-#: models.py:91 templates/taskapp/details.html:28
-#: templates/taskapp/tasklist_all.html:30
-#: templates/taskapp/tasklist_own.html:14
+#: models.py:91 templates/tasks/details.html:28
+#: templates/tasks/tasklist_all.html:30
+#: templates/tasks/tasklist_own.html:14
 msgid "Condition"
 msgstr "Состояние"
 
@@ -183,17 +183,17 @@ msgstr "Состояние"
 msgid "Attached image"
 msgstr "Прикреплённое изображение"
 
-#: models.py:99 templates/taskapp/tasklist.html:11
-#: templates/taskapp/tasklist_all.html:27
-#: templates/taskapp/tasklist_empty.html:17
-#: templates/taskapp/tasklist_failed.html:17
-#: templates/taskapp/tasklist_finish.html:12
-#: templates/taskapp/tasklist_own.html:12
+#: models.py:99 templates/tasks/tasklist.html:11
+#: templates/tasks/tasklist_all.html:27
+#: templates/tasks/tasklist_empty.html:17
+#: templates/tasks/tasklist_failed.html:17
+#: templates/tasks/tasklist_finish.html:12
+#: templates/tasks/tasklist_own.html:12
 msgid "The nature of the damage"
 msgstr "Характер поломки"
 
-#: models.py:104 templates/taskapp/add_edit_task.html:50
-#: templates/taskapp/details.html:29
+#: models.py:104 templates/tasks/add_edit_task.html:50
+#: templates/tasks/details.html:29
 msgid "Subscriber"
 msgstr "Абонент"
 
@@ -229,126 +229,126 @@ msgstr "Комментарий"
 msgid "Extra comments"
 msgstr "Комментарии"
 
-#: templates/taskapp/add_edit_task.html:8 templates/taskapp/tasklist_all.html:8
+#: templates/tasks/add_edit_task.html:8 templates/tasks/tasklist_all.html:8
 msgid "Tasks"
 msgstr "Задачи"
 
-#: templates/taskapp/add_edit_task.html:9 templates/taskapp/tasklist.html:82
-#: templates/taskapp/tasklist_all.html:94
-#: templates/taskapp/tasklist_empty.html:66
-#: templates/taskapp/tasklist_failed.html:69
-#: templates/taskapp/tasklist_finish.html:68
-#: templates/taskapp/tasklist_own.html:61
+#: templates/tasks/add_edit_task.html:9 templates/tasks/tasklist.html:82
+#: templates/tasks/tasklist_all.html:94
+#: templates/tasks/tasklist_empty.html:66
+#: templates/tasks/tasklist_failed.html:69
+#: templates/tasks/tasklist_finish.html:68
+#: templates/tasks/tasklist_own.html:61
 msgid "Edit"
 msgstr "Редактировать"
 
-#: templates/taskapp/add_edit_task.html:9
+#: templates/tasks/add_edit_task.html:9
 msgid "Create"
 msgstr "Создать"
 
-#: templates/taskapp/add_edit_task.html:20 templates/taskapp/footer_btns.html:6
-#: templates/taskapp/tasklist_all.html:115
-#: templates/taskapp/tasklist_all.html:116
+#: templates/tasks/add_edit_task.html:20 templates/tasks/footer_btns.html:6
+#: templates/tasks/tasklist_all.html:115
+#: templates/tasks/tasklist_all.html:116
 msgid "Add new task"
 msgstr "Добавьте задачу"
 
-#: templates/taskapp/add_edit_task.html:22
+#: templates/tasks/add_edit_task.html:22
 msgid "Edit task"
 msgstr "Редактировать задачу"
 
-#: templates/taskapp/add_edit_task.html:57
-#: templates/taskapp/add_edit_task.html:60
+#: templates/tasks/add_edit_task.html:57
+#: templates/tasks/add_edit_task.html:60
 msgid "Find the subscriber"
 msgstr "Найти абонента"
 
-#: templates/taskapp/add_edit_task.html:79
+#: templates/tasks/add_edit_task.html:79
 msgid "Save"
 msgstr "Сохранить"
 
-#: templates/taskapp/add_edit_task.html:82
+#: templates/tasks/add_edit_task.html:82
 msgid "Reset"
 msgstr "Сбросить"
 
-#: templates/taskapp/add_edit_task.html:86
-#: templates/taskapp/comments/extracomment_confirm_delete.html:15
-#: templates/taskapp/comments/task_comments.html:12
-#: templates/taskapp/tasklist_own.html:71
+#: templates/tasks/add_edit_task.html:86
+#: templates/tasks/comments/extracomment_confirm_delete.html:15
+#: templates/tasks/comments/task_comments.html:12
+#: templates/tasks/tasklist_own.html:71
 msgid "Delete"
 msgstr "Удалить"
 
-#: templates/taskapp/add_edit_task.html:91 templates/taskapp/tasklist.html:75
-#: templates/taskapp/tasklist_failed.html:65
+#: templates/tasks/add_edit_task.html:91 templates/tasks/tasklist.html:75
+#: templates/tasks/tasklist_failed.html:65
 msgid "Complete"
 msgstr "Завершить"
 
-#: templates/taskapp/comments/extracomment_confirm_delete.html:6
+#: templates/tasks/comments/extracomment_confirm_delete.html:6
 msgid "Delete comment"
 msgstr "Удаление комментарий"
 
-#: templates/taskapp/comments/extracomment_confirm_delete.html:10
+#: templates/tasks/comments/extracomment_confirm_delete.html:10
 #, python-format
 msgid "Are you sure you want to delete \"%(object)s\"?"
 msgstr "Вы уверены что хотите удалить \"%(object)s\"?"
 
-#: templates/taskapp/comments/task_comments.html:4
+#: templates/tasks/comments/task_comments.html:4
 msgid "Task comments"
 msgstr "Комментарии задачи"
 
-#: templates/taskapp/comments/task_comments.html:24
+#: templates/tasks/comments/task_comments.html:24
 msgid "Comment history is empty"
 msgstr "Коментариев нет"
 
-#: templates/taskapp/comments/task_comments.html:33
+#: templates/tasks/comments/task_comments.html:33
 msgid "Send"
 msgstr "Отправить"
 
-#: templates/taskapp/details.html:4
+#: templates/tasks/details.html:4
 msgid "Task details"
 msgstr "Детали задачи"
 
-#: templates/taskapp/details.html:14 templates/taskapp/details.html:33
-#: templates/taskapp/tasklist_all.html:62
-#: templates/taskapp/tasklist_all.html:75
-#: templates/taskapp/tasklist_empty.html:46
-#: templates/taskapp/tasklist_empty.html:59
-#: templates/taskapp/tasklist_failed.html:46
-#: templates/taskapp/tasklist_failed.html:59
-#: templates/taskapp/tasklist_finish.html:45
-#: templates/taskapp/tasklist_finish.html:46
-#: templates/taskapp/tasklist_own.html:46
-#: templates/taskapp/tasklist_own.html:47
+#: templates/tasks/details.html:14 templates/tasks/details.html:33
+#: templates/tasks/tasklist_all.html:62
+#: templates/tasks/tasklist_all.html:75
+#: templates/tasks/tasklist_empty.html:46
+#: templates/tasks/tasklist_empty.html:59
+#: templates/tasks/tasklist_failed.html:46
+#: templates/tasks/tasklist_failed.html:59
+#: templates/tasks/tasklist_finish.html:45
+#: templates/tasks/tasklist_finish.html:46
+#: templates/tasks/tasklist_own.html:46
+#: templates/tasks/tasklist_own.html:47
 msgid "Not assigned"
 msgstr "&lt;Не назначено&gt;"
 
-#: templates/taskapp/details.html:17
+#: templates/tasks/details.html:17
 msgid "Implementers"
 msgstr "Исполнители"
 
-#: templates/taskapp/details.html:24
+#: templates/tasks/details.html:24
 msgid "The task is valid until"
 msgstr "Задача действительна до"
 
-#: templates/taskapp/details.html:27
+#: templates/tasks/details.html:27
 msgid "Task type"
 msgstr "Тип задачи"
 
-#: templates/taskapp/details.html:36
+#: templates/tasks/details.html:36
 msgid "Attachment"
 msgstr "Приложение"
 
-#: templates/taskapp/footer_btns.html:12
+#: templates/tasks/footer_btns.html:12
 msgid "View all tasks"
 msgstr "Просмотреть все задачи"
 
-#: templates/taskapp/footer_btns.html:15
+#: templates/tasks/footer_btns.html:15
 msgid "View all new tasks"
 msgstr "Все незавершённые задачи"
 
-#: templates/taskapp/footer_btns.html:20
+#: templates/tasks/footer_btns.html:20
 msgid "View empty tasks"
 msgstr "Задачи без получателей"
 
-#: templates/taskapp/notification.html:2
+#: templates/tasks/notification.html:2
 msgid ""
 "\n"
 "%(task_status)s\n"
@@ -372,94 +372,94 @@ msgstr ""
 "\n"
 "%(task_detail)s\n"
 
-#: templates/taskapp/tasklist.html:9 templates/taskapp/tasklist_all.html:25
+#: templates/tasks/tasklist.html:9 templates/tasks/tasklist_all.html:25
 msgid "Name and comment count"
 msgstr "Имя и количество комментов"
 
-#: templates/taskapp/tasklist.html:10 templates/taskapp/tasklist_all.html:26
-#: templates/taskapp/tasklist_empty.html:16
-#: templates/taskapp/tasklist_failed.html:16
-#: templates/taskapp/tasklist_finish.html:11
-#: templates/taskapp/tasklist_own.html:11
+#: templates/tasks/tasklist.html:10 templates/tasks/tasklist_all.html:26
+#: templates/tasks/tasklist_empty.html:16
+#: templates/tasks/tasklist_failed.html:16
+#: templates/tasks/tasklist_finish.html:11
+#: templates/tasks/tasklist_own.html:11
 msgid "Address"
 msgstr "Адрес"
 
-#: templates/taskapp/tasklist.html:15 templates/taskapp/tasklist_all.html:32
-#: templates/taskapp/tasklist_empty.html:21
-#: templates/taskapp/tasklist_failed.html:21
-#: templates/taskapp/tasklist_own.html:16
+#: templates/tasks/tasklist.html:15 templates/tasks/tasklist_all.html:32
+#: templates/tasks/tasklist_empty.html:21
+#: templates/tasks/tasklist_failed.html:21
+#: templates/tasks/tasklist_own.html:16
 msgid "Actions"
 msgstr "Действия"
 
-#: templates/taskapp/tasklist.html:48 templates/taskapp/tasklist_all.html:64
-#: templates/taskapp/tasklist_empty.html:48
-#: templates/taskapp/tasklist_failed.html:48
-#: templates/taskapp/tasklist_finish.html:49
-#: templates/taskapp/tasklist_own.html:50
+#: templates/tasks/tasklist.html:48 templates/tasks/tasklist_all.html:64
+#: templates/tasks/tasklist_empty.html:48
+#: templates/tasks/tasklist_failed.html:48
+#: templates/tasks/tasklist_finish.html:49
+#: templates/tasks/tasklist_own.html:50
 msgid "User does not exist"
 msgstr "Абонент не найден"
 
-#: templates/taskapp/tasklist.html:58
+#: templates/tasks/tasklist.html:58
 msgid "Author does not exist"
 msgstr "Автор не найден"
 
-#: templates/taskapp/tasklist.html:66 templates/taskapp/tasklist_all.html:84
+#: templates/tasks/tasklist.html:66 templates/tasks/tasklist_all.html:84
 msgid "Today"
 msgstr "Сегодня"
 
-#: templates/taskapp/tasklist.html:68 templates/taskapp/tasklist_all.html:86
+#: templates/tasks/tasklist.html:68 templates/tasks/tasklist_all.html:86
 msgid "Yesterday"
 msgstr "Вчера"
 
-#: templates/taskapp/tasklist.html:78
+#: templates/tasks/tasklist.html:78
 msgid "Mark as unsuccessful"
 msgstr "Отметить задачу как проваленную"
 
-#: templates/taskapp/tasklist.html:90 templates/taskapp/tasklist_all.html:107
-#: templates/taskapp/tasklist_empty.html:74
-#: templates/taskapp/tasklist_failed.html:77
-#: templates/taskapp/tasklist_finish.html:76
+#: templates/tasks/tasklist.html:90 templates/tasks/tasklist_all.html:107
+#: templates/tasks/tasklist_empty.html:74
+#: templates/tasks/tasklist_failed.html:77
+#: templates/tasks/tasklist_finish.html:76
 msgid "The list is empty"
 msgstr "Список пуст"
 
-#: templates/taskapp/tasklist_all.html:9
+#: templates/tasks/tasklist_all.html:9
 msgid "All tasks"
 msgstr "Все задачи"
 
-#: templates/taskapp/tasklist_all.html:15
+#: templates/tasks/tasklist_all.html:15
 msgid "Records of all the tasks in the system"
 msgstr "Лог всех задач в системе"
 
-#: templates/taskapp/tasklist_all.html:69
-#: templates/taskapp/tasklist_finish.html:54
+#: templates/tasks/tasklist_all.html:69
+#: templates/tasks/tasklist_finish.html:54
 msgid "None"
 msgstr "Нету"
 
-#: templates/taskapp/tasklist_all.html:99
-#: templates/taskapp/tasklist_own.html:66
+#: templates/tasks/tasklist_all.html:99
+#: templates/tasks/tasklist_own.html:66
 msgid "Remind"
 msgstr "Напомнить"
 
-#: templates/taskapp/tasklist_empty.html:5
+#: templates/tasks/tasklist_empty.html:5
 msgid "Tasks in which no recipients"
 msgstr "Задачи, в которых нет получателей"
 
-#: templates/taskapp/tasklist_empty.html:15
-#: templates/taskapp/tasklist_failed.html:15
-#: templates/taskapp/tasklist_finish.html:10
-#: templates/taskapp/tasklist_own.html:10
+#: templates/tasks/tasklist_empty.html:15
+#: templates/tasks/tasklist_failed.html:15
+#: templates/tasks/tasklist_finish.html:10
+#: templates/tasks/tasklist_own.html:10
 msgid "Name"
 msgstr "ФИО"
 
-#: templates/taskapp/tasklist_failed.html:5
+#: templates/tasks/tasklist_failed.html:5
 msgid "Tasks in which was trouble while at runtime"
 msgstr "Задачи в которых возникли проблемы во время выполнения"
 
-#: templates/taskapp/tasklist_finish.html:61
+#: templates/tasks/tasklist_finish.html:61
 msgid "Author does not specified"
 msgstr "Автор не указан"
 
-#: templates/taskapp/tasklist_own.html:79
+#: templates/tasks/tasklist_own.html:79
 msgid "All your tasks has been performed"
 msgstr "Все ваши задачи выполнены"
 

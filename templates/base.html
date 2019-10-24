@@ -36,8 +36,8 @@
                 </a>
             </li>
 
-            {% if perms.taskapp.view_task %}
-                {% url 'taskapp:home' as task_home %}
+            {% if perms.tasks.view_task %}
+                {% url 'tasks:home' as task_home %}
                 <li{% if task_home in request.path %} class="active"{% endif %}>
                     <a href="{{ task_home }}">
                         <span class="glyphicon glyphicon-tasks"></span> {% trans 'Tasks' %}

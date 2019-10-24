@@ -17,7 +17,7 @@
         <tbody>
         {% for task in tasks %}
             <tr>
-                <td class="text-center"><a href="{% url 'taskapp:edit' task.pk %}" class="btn btn-default" title="{% trans 'View' %}" data-toggle="tooltip">
+                <td class="text-center"><a href="{% url 'tasks:edit' task.pk %}" class="btn btn-default" title="{% trans 'View' %}" data-toggle="tooltip">
                     <span class="glyphicon glyphicon-eye-open"></span>
                 </a></td>
                 <td>
@@ -48,7 +48,7 @@
         <tfoot>
         <tr>
             <td colspan="7">
-                {% include 'taskapp/footer_btns.html' %}
+                {% include 'tasks/footer_btns.html' %}
             </td>
         </tr>
         </tfoot>
