@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/var/www/djing/venv/bin/python
 import os
 from threading import Thread
 import django
