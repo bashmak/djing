@@ -17,7 +17,7 @@ from gw_app.nas_managers import NasFailedResult, NasNetworkError
 @login_required
 def home(request):
     num_active_tasks = Task.objects.filter(
-        abon=request.user, state='S'
+        abon=request.user, state=0
     ).count()
     return render(request, 'clientsideapp/index.html', {
         'num_active_tasks': num_active_tasks
