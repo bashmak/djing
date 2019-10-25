@@ -447,7 +447,7 @@ class InvoiceForPayment(models.Model):
 
     class Meta:
         ordering = ('date_create',)
-        db_table = 'abonent_inv_pay'
+        db_table = 'customer_inv_pay'
         verbose_name = _('Debt')
         verbose_name_plural = _('Debts')
 
