@@ -218,7 +218,7 @@ class DeviceCreateView(LoginAdminMixin, PermissionRequiredMixin, CreateView):
         # change device info in dhcpd.conf
         try:
             self.request.user.log(
-                self.request.META, 'cdev',
+                self.request.META, 2,
                 'ip %s, mac: %s, "%s"' % (
                     self.object.ip_address,
                     self.object.mac_addr,
