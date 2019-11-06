@@ -185,7 +185,7 @@ class DelAbonDeleteView(LoginAdminMixin, PermissionRequiredMixin, DeleteView):
                     is_access=abon.is_access(), nas_pk=abon.nas_id
                 )
             abon.delete()
-            request.user.log(request.META, 'dusr', (
+            request.user.log(request.META, 2, (
                 '%(uname)s, "%(fio)s", %(group)s %(street)s %(house)s' % {
                     'uname': abon.username,
                     'fio': abon.fio or '-',
