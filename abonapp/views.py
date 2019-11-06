@@ -33,7 +33,7 @@ from djing.lib.mixins import (
 from groupapp.models import Group
 from guardian.decorators import \
     permission_required_or_403 as permission_required
-from guardian.shortcuts import get_objects_for_user, assign_perm
+from guardian.shortcuts import get_objects_for_user
 from gw_app.models import NASModel
 from gw_app.nas_managers import NasFailedResult, NasNetworkError
 from ip_pool.models import NetworkModel
@@ -131,11 +131,11 @@ class AbonCreateView(LoginRequiredMixin, OnlyAdminsMixin,
         try:
             abon = form.save()
             me = self.request.user
-            assign_perm("abonapp.change_abon", me, abon)
-            assign_perm("abonapp.delete_abon", me, abon)
-            assign_perm("abonapp.can_buy_tariff", me, abon)
-            assign_perm('abonapp.can_add_ballance', me, abon)
-            me.log(self.request.META, 'cusr', '%s, "%s", %s' % (
+            # assign_perm("abonapp.change_abon", me, abon)
+            # assign_perm("abonapp.delete_abon", me, abon)
+            # assign_perm("abonapp.can_buy_tariff", me, abon)
+            # assign_perm('abonapp.can_add_ballance', me, abon)
+            me.log(self.request.META, 1, '%s, "%s", %s' % (
                 abon.username, abon.fio,
                 abon.group.title if abon.group else ''
             ))
