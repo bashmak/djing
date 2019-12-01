@@ -167,7 +167,9 @@ class Task(models.Model):
         )
 
     def is_relevant(self):
-        return self.out_date < timezone.now().date() or self.state == 2
+        if self.out_date:
+            return self.out_date < timezone.now().date() or self.state == 2
+        return False
 
 
 class ExtraComment(models.Model):
