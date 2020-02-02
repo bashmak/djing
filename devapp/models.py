@@ -44,7 +44,11 @@ class Device(models.Model):
         (5, dev_types.Olt_ZTE_C320),
         (6, dev_types.ZteOnuDevice),
         (7, dev_types.ZteF601),
-        (8, dev_types.HuaweiSwitch)
+        (8, dev_types.HuaweiSwitch),
+        #(9, dev_types.ZteF660v125s)
+        (9, dev_types.DLinkDevice),
+        (10, dev_types.DLinkDevice),
+        (11, dev_types.DLinkDevice)
     )
     devtype = models.PositiveSmallIntegerField(_('Device type'), default=1,
                                                choices=MyChoicesAdapter(DEVICE_TYPES),
@@ -119,7 +123,17 @@ class Port(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name=_('Device'))
     num = models.PositiveSmallIntegerField(_('Number'), default=0)
     descr = models.CharField(_('Description'), max_length=60, null=True, blank=True)
-
+    PORT_OPERATING_MODES = (
+        (0, _('Not chosen')),
+        (1, _('Access')),
+        (2, _('Trunk')),
+        (3, _('Hybrid')),
+        (4, _('General'))
+    )
+    operating_mode = models.PositiveSmallIntegerField(
+        _('Operating mode'), default=0,
+        choices=PORT_OPERATING_MODES
+    )
     def __str__(self):
         return "%d: %s" % (self.num, self.descr)
 

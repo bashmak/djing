@@ -354,7 +354,8 @@ def add_ports(request, group_id: int, device_id: int):
                     Port.objects.create(
                         num=port_num,
                         device=device,
-                        descr=port_text
+                        descr=port_text,
+                        operating_mode=0
                     )
 
         db_ports = Port.objects.filter(device=device)

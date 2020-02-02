@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _, gettext
 from django.conf import settings
 
 from djing.lib import RuTimedelta, safe_int, safe_float
-from devapp.expect_scripts import register_f601_onu, register_f660_onu, ExpectValidationError, OnuZteRegisterError
+from devapp.expect_scripts import register_f601_onu, register_f660_onu, ExpectValidationError, OnuZteRegisterError, register_f660v125s_onu
 from devapp.expect_scripts.base import sn_to_mac
 from .base_intr import (
     DevBase, SNMPBaseWorker, BasePort, DeviceImplementationError,
@@ -559,6 +559,13 @@ class ZteF601(ZteOnuDevice):
 
     def register_device(self, extra_data: Dict):
         return _reg_dev_zte(self.db_instance, extra_data, register_f601_onu)
+
+
+class ZteF660v125s(ZteOnuDevice):
+    description = 'ZTE ONU F660 V125 S'
+
+    def register_device(self, extra_data: Dict):
+        return _reg_dev_zte(self.db_instance, extra_data, register_f660v125s_onu)
 
 
 class HuaweiSwitch(EltexSwitch):
