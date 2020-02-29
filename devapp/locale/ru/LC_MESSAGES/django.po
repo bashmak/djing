@@ -661,7 +661,7 @@ msgstr "Устройство исправлено"
 #: views.py:683
 #, python-format
 msgid "Device with mac address %(mac)s does not exist"
-msgstr "Устройство мак адресом %(mac)s не найдено"
+msgstr "ONU %(mac)s не видно, надо ехать"
 
 #: views.py:693
 msgid "Fixed"
