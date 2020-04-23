@@ -115,7 +115,7 @@ class Task(models.Model):
     time_of_create = models.DateTimeField(
         _('Date of create'), auto_now_add=True
     )
-    state = models.PositiveSmallIntegerField(
+    task_state = models.PositiveSmallIntegerField(
         _('Condition'), choices=TASK_STATES,
         default=TASK_STATES[0][0]
     )
@@ -142,23 +142,23 @@ class Task(models.Model):
         )
 
     def finish(self, current_user):
-        self.state = 2  # Finished
+        self.task_state = 2  # Finished
         self.out_date = timezone.now()  # End time
         ChangeLog.objects.create(
             task=self,
             act_type=4,
             who=current_user
         )
-        self.save(update_fields=('state', 'out_date'))
+        self.save(update_fields=('task_state', 'out_date'))
 
     def do_fail(self, current_user):
-        self.state = 1  # Crashed
+        self.task_state = 1  # Crashed
         ChangeLog.objects.create(
             task=self,
             act_type=5,
             who=current_user
         )
-        self.save(update_fields=('state',))
+        self.save(update_fields=('task_state',))
 
     def send_notification(self):
         task_handle(
@@ -168,7 +168,7 @@ class Task(models.Model):
 
     def is_relevant(self):
         if self.out_date:
-            return self.out_date < timezone.now().date() or self.state == 2
+            return self.out_date < timezone.now().date() or self.task_state == 2
         return False
 
 

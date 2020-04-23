@@ -55,7 +55,7 @@
 
                 <td>{{ task.get_mode_display }}</td>
                 <td>{{ task.descr|default:'' }}</td>
-                <td>{{ task.get_state_display }}</td>
+                <td>{{ task.get_task_state_display }}</td>
                 <td class="hidden-xs">{{ task.time_of_create|date:'d E H:i' }}</td>
 
                 <td class="btn-group btn-group-justified">

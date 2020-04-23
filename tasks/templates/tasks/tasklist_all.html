@@ -76,7 +76,7 @@
                         {% trans 'Not assigned' %}
                     {% endif %}
                 </td>
-                <td>{{ task.get_state_display }}</td>
+                <td>{{ task.get_task_state_display }}</td>
 
                 <td class="hidden-xs">
                     {% is_today task.time_of_create as is_timecreate_is_today %}

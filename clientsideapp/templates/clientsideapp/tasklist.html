@@ -19,7 +19,7 @@
         <tbody>
         {% for task in tasks %}
         <tr>
-            <td>{{ task.get_state_display }}</td>
+            <td>{{ task.get_task_state_display }}</td>
             <td>
                 {% if task.time_of_create|is_current_year %}
                     {{ task.time_of_create|date:'d b H:i' }}

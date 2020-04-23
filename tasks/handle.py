@@ -26,7 +26,7 @@ def handle(task, author, recipients):
     task_status = _('Task')
 
     # If task completed or failed
-    if task.state in (1, 2):
+    if task.task_state in (1, 2):
         task_status = _('Task completed')
 
     fulltext = render_to_string('tasks/notification.html', {
@@ -36,7 +36,7 @@ def handle(task, author, recipients):
     })
 
     try:
-        if task.state in (1, 2):
+        if task.task_state in (1, 2):
             # If task completed or failed than send one message to author
             send_email_notify.delay(fulltext, author.pk)
             send_viber_message.delay(None, author.pk, fulltext)

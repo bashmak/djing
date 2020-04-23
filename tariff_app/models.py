@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from django.core.validators import MinValueValidator
 from django.db import models, IntegrityError
 from django.utils.translation import gettext_lazy as _
 from django.dispatch import receiver
@@ -30,6 +32,15 @@ class Tariff(models.Model):
     descr = models.CharField(_('Service description'), max_length=256)
     speedIn = models.FloatField(_('Speed In'), default=0.0, db_column='speed_in')
     speedOut = models.FloatField(_('Speed Out'), default=0.0, db_column='speed_out')
+    speed_burst = models.FloatField(
+        _('Speed burst'),
+        help_text=_('Result burst = speed * speed_burst,'
+                    ' speed_burst must be > 1.0'),
+        default=1.0,
+        validators=[
+            MinValueValidator(limit_value=1.0),
+        ]
+    )
     amount = models.FloatField(_('Price'), default=0.0, db_column='cost')
     calc_type = models.PositiveSmallIntegerField(
         _('Script'), default=0,

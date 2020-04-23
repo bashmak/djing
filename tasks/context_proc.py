@@ -8,7 +8,7 @@ from profiles.models import UserProfile
 def get_active_tasks_count(request):
     tasks_count = 0
     if isinstance(request.user, UserProfile):
-        tasks_count = Task.objects.filter(recipients__in=[request.user], state=0).count()
+        tasks_count = Task.objects.filter(recipients__in=[request.user], task_state=0).count()
     return {
         'tasks_count': tasks_count
     }

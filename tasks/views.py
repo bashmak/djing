@@ -35,7 +35,7 @@ class NewTasksView(LoginAdminPermissionMixin, ListView):
 
     def get_queryset(self):
         return Task.objects.filter(
-            recipients=self.request.user, state=0
+            recipients=self.request.user, task_state=0
         ).annotate(
             comment_count=Count('extracomment')
         ).select_related(
@@ -52,7 +52,7 @@ class FailedTasksView(NewTasksView):
 
     def get_queryset(self):
         return Task.objects.filter(
-            recipients=self.request.user, state=1
+            recipients=self.request.user, task_state=1
         ).select_related(
             'abon', 'abon__street', 'abon__group', 'author'
         )
@@ -63,7 +63,7 @@ class FinishedTaskListView(NewTasksView):
 
     def get_queryset(self):
         return Task.objects.filter(
-            recipients=self.request.user, state=2
+            recipients=self.request.user, task_state=2
         ).select_related(
             'abon', 'abon__street', 'abon__group', 'author'
         )
@@ -76,7 +76,7 @@ class OwnTaskListView(NewTasksView):
         # Attached and not finished tasks
         return Task.objects.filter(
             author=self.request.user
-        ).exclude(state=2).select_related(
+        ).exclude(task_state=2).select_related(
             'abon', 'abon__street', 'abon__group'
         )
 
@@ -111,7 +111,7 @@ class AllTasksListView(LoginAdminMixin, LoginRequiredMixin, ListView):
 class AllNewTasksListView(AllTasksListView):
 
     def get_queryset(self):
-        return super(AllNewTasksListView, self).get_queryset().filter(state=0)
+        return super(AllNewTasksListView, self).get_queryset().filter(task_state=0)
 
 
 class EmptyTasksListView(NewTasksView):
@@ -168,7 +168,7 @@ class TaskUpdateView(LoginAdminMixin, UpdateView):
         # check if new task with user already exists
         uname = request.GET.get('uname')
         if uname and self.kwargs.get('task_id') is None:
-            exists_task = Task.objects.filter(abon__username=uname, state=0)
+            exists_task = Task.objects.filter(abon__username=uname, task_state=0)
             if exists_task.exists():
                 messages.info(request, _('New task with this user already exists.'
                                          ' You are redirected to it.'))
@@ -188,8 +188,8 @@ class TaskUpdateView(LoginAdminMixin, UpdateView):
 
     def form_valid(self, form):
         # check if new task with picked user already exists
-        if form.cleaned_data['state'] == 0 and self.kwargs.get('task_id') is None:
-            exists_task = Task.objects.filter(abon=form.cleaned_data['abon'], state=0)
+        if form.cleaned_data['task_state'] == 0 and self.kwargs.get('task_id') is None:
+            exists_task = Task.objects.filter(abon=form.cleaned_data['abon'], task_state=0)
             if exists_task.exists():
                 messages.info(self.request, _('New task with this user already exists.'
                                               ' You are redirected to it.'))
@@ -289,7 +289,7 @@ def task_failed(request, task_id):
 def remind(request, task_id):
     try:
         task = get_object_or_404(Task, id=task_id)
-        task.save(update_fields=('state',))
+        task.save(update_fields=('task_state',))
         task.send_notification()
         messages.success(request, _('Task has been reminded'))
     except MultipleException as errs:

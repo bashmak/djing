@@ -1,6 +1,7 @@
 from ipaddress import ip_network, ip_address
 from typing import Optional, Generator
 
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.shortcuts import resolve_url
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -11,6 +12,32 @@ from groupapp.models import Group
 
 
 # Maked compatible
+
+class VlanIf(models.Model):
+    title = models.CharField(_('Vlan title'), max_length=128)
+    vid = models.PositiveSmallIntegerField(_('VID'), default=1, validators=[
+        MinValueValidator(2, message=_('Vid could not be less then 2')),
+        MaxValueValidator(4094, message=_('Vid could not be more than 4094'))
+    ], unique=True)
+    is_management = models.BooleanField(_('Is management'), default=False)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        db_table = 'networks_vlan'
+        ordering = ('-id',)
+        verbose_name = _('Vlan')
+        verbose_name_plural = _('Vlan list')
+
+
+class NetworksIpPoolGroups(models.Model):
+    group = models.ForeignKey(Group, db_column='group_id', on_delete=models.CASCADE)
+    ippool = models.ForeignKey('NetworkModel', db_column='networkippool_id', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'networks_ippool_groups'
+
 
 class NetworkModel(models.Model):
     _netw_cache = None
@@ -39,11 +66,23 @@ class NetworkModel(models.Model):
         choices=NETWORK_KINDS, default=0
     )
     description = models.CharField(_('Description'), max_length=64)
-    groups = models.ManyToManyField(Group, verbose_name=_('Groups'))
+    groups = models.ManyToManyField(
+        Group, verbose_name=_('Groups'),
+        through=NetworksIpPoolGroups,
+        through_fields=('ippool', 'group')
+    )
 
     # Usable ip range
     ip_start = models.GenericIPAddressField(_('Start work ip range'))
     ip_end = models.GenericIPAddressField(_('End work ip range'))
+
+    vlan_if = models.ForeignKey(
+        VlanIf, verbose_name=_('Vlan interface'),
+        on_delete=models.CASCADE, blank=True,
+        null=True, default=None
+    )
+
+    gateway = models.GenericIPAddressField(_('Gateway ip address'))
 
     def __str__(self):
         netw = self.get_network()
@@ -162,7 +201,7 @@ class NetworkModel(models.Model):
                 return ip
 
     class Meta:
-        db_table = 'networks_network'
+        db_table = 'networks_ip_pool'
         verbose_name = _('Network')
         verbose_name_plural = _('Networks')
         ordering = ('network',)

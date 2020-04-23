@@ -25,7 +25,7 @@
         {% trans 'Date of create' %} {{ task.time_of_create|date:'d E Y H:i:s' }}<br>
         {{ time_diff }}<br>
         {% trans 'Task type' %}: {{ task.get_mode_display }}<br>
-        {% trans 'Condition' %}: {{ task.get_state_display }}<br>
+        {% trans 'Condition' %}: {{ task.get_task_state_display }}<br>
         {% trans 'Subscriber' %}
         {% if task.abon %}
             <a href="{% url 'abonapp:abon_home' task.abon.group.pk task.abon.username %}">{{ task.abon.get_full_name }}</a>

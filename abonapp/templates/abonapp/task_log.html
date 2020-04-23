@@ -35,7 +35,7 @@
                     {% endfor %}
                 </td>
                 <td>{{ task.descr|default:'&mdash;' }}</td>
-                <td>{{ task.get_state_display }}</td>
+                <td>{{ task.get_task_state_display }}</td>
                 <td>{{ task.get_mode_display }}</td>
                 <td>{{ task.time_of_create|date:"D d E Y H:i:s" }}</td>
             </tr>
