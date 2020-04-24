@@ -87,11 +87,11 @@ class DeviceDeleteView(LoginAdminPermissionMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         res = super().delete(request, *args, **kwargs)
         try:
-            request.user.log(request.META, 'ddev', 'ip %s, mac: %s, "%s"' % (
-                self.object.ip_address or '-',
-                self.object.mac_addr or '-',
-                self.object.comment or '-'
-            ))
+            # request.user.log(request.META, 'ddev', 'ip %s, mac: %s, "%s"' % (
+            #     self.object.ip_address or '-',
+            #     self.object.mac_addr or '-',
+            #     self.object.comment or '-'
+            # ))
             onu_register.delay(
                 tuple(dev.pk for dev in Device.objects.exclude(group=None).only('pk').iterator())
             )

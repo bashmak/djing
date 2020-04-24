@@ -42,10 +42,10 @@
                 {% url 'acc_app:other_profile' request.user.id as home_url %}
                 <li{% if home_url == request.path %} class="active"{% endif %}><a href="{{ home_url }}">{% trans 'Main page' %}</a></li>
 
-                {% if request.user.is_superuser %}
-                    {% url 'mapapp:home' as map_url %}
-                    <li{% if map_url == request.path %} class="active"{% endif %}><a href="{{ map_url }}" target="_blank">{% trans 'Map page' %}</a></li>
-                {% endif %}
+                {#{% if request.user.is_superuser %}#}
+                {#    {% url 'mapapp:home' as map_url %}#}
+                {#    <li{% if map_url == request.path %} class="active"{% endif %}><a href="{{ map_url }}" target="_blank">{% trans 'Map page' %}</a></li>#}
+                {#{% endif %}#}
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans 'Other' %} <b class="caret"></b></a>

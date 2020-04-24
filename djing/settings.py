@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'tariff_app',
     'searchapp',
     'devapp',
-    'mapapp',
+    # 'mapapp',
     'traf_stat',
     'finapp',
     'tasks',
