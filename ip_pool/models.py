@@ -84,6 +84,8 @@ class NetworkModel(models.Model):
 
     gateway = models.GenericIPAddressField(_('Gateway ip address'))
 
+    is_dynamic = models.BooleanField(_('Is dynamic'), default=False)
+
     def __str__(self):
         netw = self.get_network()
         return "%s: %s" % (self.description, netw.with_prefixlen)
