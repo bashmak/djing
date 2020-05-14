@@ -65,7 +65,7 @@ class TariffCp(TariffDp):
     def calc_deadline(self) -> datetime:
         # делаем время окончания услуги на 10 лет вперёд
         nw = timezone.now()
-        long_long_time = datetime(year=nw.year + 10, month=1, day=nw.day,
+        long_long_time = datetime(year=nw.year + 10, month=1, day=1,
                                   hour=23, minute=59, second=59)
         return long_long_time
 
