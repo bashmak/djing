@@ -48,7 +48,8 @@ class Device(models.Model):
         #(9, dev_types.ZteF660v125s)
         (9, dev_types.DLinkDevice),
         (10, dev_types.DLinkDevice),
-        (11, dev_types.DLinkDevice)
+        (11, dev_types.DLinkDevice),
+        (12, dev_types.ZteOnuDevice)
     )
     devtype = models.PositiveSmallIntegerField(_('Device type'), default=1,
                                                choices=MyChoicesAdapter(DEVICE_TYPES),
