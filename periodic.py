@@ -122,7 +122,7 @@ def main():
     # sync subscribers on GW
     threads = tuple(NasSyncThread(nas) for nas in NASModel.objects.
                     annotate(usercount=Count('abon')).
-                    filter(usercount__gt=0, enabled=True))
+                    filter(usercount__gt=0, enabled=True, nas_type=0))
     for t in threads:
         t.start()
     for t in threads:
